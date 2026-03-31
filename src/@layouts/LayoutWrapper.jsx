@@ -17,7 +17,7 @@ const LayoutWrapper = ({ verticalLayout }) => {
           position: 'fixed',
           bottom: 50,
           right: 20,
-          zIndex: 1500,
+          zIndex: 1000,
           width: 48,
           height: 48,
           borderRadius: '50%',
