@@ -24,7 +24,7 @@ const CustomThemeProvider = ({ children, direction }) => {
     }
 
     const coreTheme = defaultCoreTheme(settings.mode || 'light', direction)
-    return extendTheme({ ...coreTheme, ...colorScheme })
+    return extendTheme({ ...coreTheme, ...colorScheme, colorSchemeSelector: 'class' })
   }, [settings.mode, direction])
 
   return (

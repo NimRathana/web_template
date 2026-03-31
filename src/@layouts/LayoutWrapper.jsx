@@ -11,23 +11,27 @@ const LayoutWrapper = ({ verticalLayout }) => {
       {verticalLayout}
 
       <button
+        type="button"
         onClick={() => setOpen(true)}
         className="pulse"
         style={{
           position: 'fixed',
-          bottom: 50,
-          right: 20,
+          top: 200,
+          right: 0,
           zIndex: 1000,
-          width: 48,
-          height: 48,
-          borderRadius: '50%',
-          backgroundColor: '#1976d2',
-          color: 'white',
+          width: 40,
+          height: 40,
+          borderRadius: '20px 0 0 20px',  
+          backgroundColor: '#FFC107',    
           border: 'none',
-          cursor: 'pointer'
+          boxShadow: '0 4px 15px rgba(255, 193, 7, 0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.2s ease',
         }}
       >
-        <i className="ri-settings-3-line spin-slow" />
+        <i className="ri-settings-3-line" />
       </button>
       <ThemeCustomizer open={open} onClose={() => setOpen(false)} />
     </div>
