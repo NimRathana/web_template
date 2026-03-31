@@ -22,7 +22,8 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-use": "^17.6.0",
     "remixicon": "^4.9.1",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "tailwindcss-logical": "^4.2.0"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",

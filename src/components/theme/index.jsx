@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { ThemeProvider, extendTheme, lighten, darken } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import ModeChanger from './ModeChanger'
 import { useSettings } from '@core/hooks/useSettings'
 import defaultCoreTheme from '@core/theme'
@@ -13,18 +13,19 @@ const CustomThemeProvider = ({ children, direction }) => {
   const { settings } = useSettings()
 
   const theme = useMemo(() => {
+    const coreTheme = defaultCoreTheme(settings.mode || 'light', direction)
     const colorScheme = {
       palette: {
         primary: {
           main: primaryColorConfig[0].main,
           light: lighten(primaryColorConfig[0].main, 0.2),
-          dark: darken(primaryColorConfig[0].main, 0.1)
-        }
-      }
+          dark: darken(primaryColorConfig[0].main, 0.1),
+        },
+      },
+      colorSchemeSelector: 'class',
     }
 
-    const coreTheme = defaultCoreTheme(settings.mode || 'light', direction)
-    return extendTheme({ ...coreTheme, ...colorScheme, colorSchemeSelector: 'class' })
+    return extendTheme({ ...coreTheme, ...colorScheme })
   }, [settings.mode, direction])
 
   return (
