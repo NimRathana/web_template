@@ -1,5 +1,10 @@
 {
-    "cSpell.words": [
-        "Rathana"
-    ]
+  "cSpell.enabled": true,
+  "cSpell.language": "en",
+  "cSpell.ignorePaths": [
+    "**/*.ts",
+    "**/*.js",
+    "**/*.tsx",
+    "**/*.jsx"
+  ]
 }
