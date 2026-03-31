@@ -51,8 +51,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
         sx: { 
           width: 340, 
           p: 3, 
-          bgcolor: '#1E1B2E',
-          color: 'white',
         } 
       }}
     >
@@ -75,20 +73,11 @@ const ThemeCustomizer = ({ open, onClose }) => {
 
       {/* ==================== THEMING SECTION ==================== */}
       <Box sx={{ 
-        bgcolor: '#2A263F', 
         px: 2, 
         py: 1, 
         borderRadius: 1, 
         mb: 3 
       }}>
-        <Typography 
-          variant="subtitle2" 
-          fontWeight={600} 
-          sx={{ color: '#FFC107', mb: 2 }}
-        >
-          Theming
-        </Typography>
-
         {/* Primary Color */}
         <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
           Primary Color
@@ -149,7 +138,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
                   p: 2,
                   borderRadius: 2,
                   border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  bgcolor: selected ? '#3A3550' : 'transparent',
                   cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
@@ -184,7 +172,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
                   p: 1.5,
                   borderRadius: 2,
                   border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  bgcolor: '#12101F',
                   cursor: 'pointer',
                   position: 'relative',
                   overflow: 'hidden',
@@ -214,15 +201,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
       </Box>
 
       {/* ==================== LAYOUT SECTION ==================== */}
-      <Box sx={{ bgcolor: '#2A263F', px: 2, py: 1, borderRadius: 1 }}>
-        <Typography 
-          variant="subtitle2" 
-          fontWeight={600} 
-          sx={{ color: '#FFC107', mb: 2 }}
-        >
-          Layout
-        </Typography>
-
+      <Box sx={{ px: 2, py: 1, borderRadius: 1 }}>
         {/* Layout Types */}
         <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
           Layout
