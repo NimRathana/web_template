@@ -75,7 +75,7 @@ const ModeDropdown = () => {
 
   return (
     <>
-      <Tooltip title="Theme Mode" arrow TransitionComponent={Fade}>
+      <Tooltip title={`${settings.mode || 'light'}`} arrow TransitionComponent={Fade} PopperProps={{ className: 'capitalize' }}>
         <IconButton
           ref={anchorRef}
           onClick={handleMenuOpen}
