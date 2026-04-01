@@ -1,12 +1,7 @@
 'use client'
 
-// React Imports
 import { useRef, useState } from 'react'
-
-// Next Imports
 import { useRouter } from 'next/navigation'
-
-// MUI Imports
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
@@ -19,137 +14,128 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
-// Styled component for badge content
-const BadgeContentSpan = styled('span')({
+const BadgeContentSpan = styled('span')(({ theme }) => ({
   width: 8,
   height: 8,
   borderRadius: '50%',
   cursor: 'pointer',
-  backgroundColor: 'var(--mui-palette-success-main)',
-  boxShadow: '0 0 0 2px var(--mui-palette-background-paper)'
-})
+  backgroundColor: theme.palette.success.main,
+  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
+}))
 
 const UserDropdown = () => {
-  // States
   const [open, setOpen] = useState(false)
-
-  // Refs
   const anchorRef = useRef(null)
-
-  // Hooks
   const router = useRouter()
 
-  const handleDropdownOpen = () => {
-    !open ? setOpen(true) : setOpen(false)
-  }
+  const handleToggle = () => setOpen(prev => !prev)
 
-  const handleDropdownClose = (event, url) => {
-    if (url) {
-      router.push(url)
-    }
-
-    if (anchorRef.current && anchorRef.current.contains(event?.target)) {
-      return
-    }
-
+  const handleClose = (event, url) => {
+    if (url) router.push(url)
+    if (anchorRef.current && anchorRef.current.contains(event?.target)) return
     setOpen(false)
   }
 
   return (
-  <>
-    <Badge
-      ref={anchorRef}
-      overlap="circular"
-      badgeContent={<BadgeContentSpan onClick={handleDropdownOpen} />}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      className="ml-2"
-    >
-      <Avatar
-        alt="John Doe"
-        src="/images/avatars/1.png"
-        onClick={handleDropdownOpen}
-        className="cursor-pointer w-[38px] h-[38px]"
-      />
-    </Badge>
+    <>
+      <Badge
+        overlap="circular"
+        badgeContent={<BadgeContentSpan onClick={handleToggle} />}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Avatar
+          ref={anchorRef}
+          alt="John Doe"
+          src="/images/avatars/1.png"
+          onClick={handleToggle}
+          sx={{ width: 38, height: 38, cursor: 'pointer' }}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+        />
+      </Badge>
 
-    <Popper
-      open={open}
-      transition
-      placement="bottom-end"
-      anchorEl={anchorRef.current}
-      className="min-w-[240px] mt-2 z-50"
-    >
-      {({ TransitionProps, placement }) => (
-        <Fade
-          {...TransitionProps}
-          style={{
-            transformOrigin:
-              placement === 'bottom-end' ? 'right top' : 'left top'
-          }}
-        >
-          <Paper className="shadow-xl rounded-lg overflow-hidden">
-            <ClickAwayListener onClickAway={handleDropdownClose}>
-              <MenuList className="py-2">
-
-                {/* USER INFO */}
-                <div className="flex items-center gap-3 px-4 py-2">
-                  <Avatar alt="John Doe" src="/images/avatars/1.png" />
-                  <div className="flex flex-col">
-                    <Typography className="font-medium text-sm">
-                      John Doe
-                    </Typography>
-                    <Typography variant="caption" className="text-gray-500">
-                      Admin
-                    </Typography>
-                  </div>
-                </div>
-
-                <Divider />
-
-                {/* MENU ITEMS */}
-                {[
-                  { icon: 'ri-user-3-line', label: 'My Profile' },
-                  { icon: 'ri-settings-4-line', label: 'Settings' },
-                  { icon: 'ri-money-dollar-circle-line', label: 'Pricing' },
-                  { icon: 'ri-question-line', label: 'FAQ' }
-                ].map((item, index) => (
-                  <MenuItem
-                    key={index}
-                    onClick={handleDropdownClose}
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100"
+      <Popper
+        open={open}
+        transition
+        disablePortal
+        placement="bottom-end"
+        anchorEl={anchorRef.current}
+        sx={{ zIndex: 1200, minWidth: 240, mt: 1 }}
+      >
+        {({ TransitionProps, placement }) => (
+          <Fade
+            {...TransitionProps}
+            style={{
+              transformOrigin: placement === 'bottom-end' ? 'right top' : 'left top'
+            }}
+          >
+            <Paper elevation={3}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    px={2}
+                    py={1}
+                    gap={2}
+                    tabIndex={-1}
                   >
-                    <i className={item.icon} />
-                    <Typography className="text-sm">
-                      {item.label}
-                    </Typography>
+                    <Avatar alt="John Doe" src="/images/avatars/1.png" />
+                    <Box display="flex" flexDirection="column">
+                      <Typography fontWeight={500} color="text.primary">
+                        John Doe
+                      </Typography>
+                      <Typography variant="caption">Admin</Typography>
+                    </Box>
+                  </Box>
+                  <Divider sx={{ my: 0.5 }} />
+                  <MenuItem onClick={handleClose}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <i className="ri-user-3-line" />
+                      <Typography color="text.primary">My Profile</Typography>
+                    </Box>
                   </MenuItem>
-                ))}
-
-                <Divider />
-
-                {/* LOGOUT */}
-                <div className="px-4">
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="error"
-                    size="small"
-                    endIcon={<i className="ri-logout-box-r-line" />}
-                    onClick={(e) => handleDropdownClose(e, '/login')}
-                  >
-                    Logout
-                  </Button>
-                </div>
-
-              </MenuList>
-            </ClickAwayListener>
-          </Paper>
-        </Fade>
-      )}
-    </Popper>
-  </>
-);
+                  <MenuItem onClick={handleClose}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <i className="ri-settings-4-line" />
+                      <Typography color="text.primary">Settings</Typography>
+                    </Box>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <i className="ri-money-dollar-circle-line" />
+                      <Typography color="text.primary">Pricing</Typography>
+                    </Box>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <i className="ri-question-line" />
+                      <Typography color="text.primary">FAQ</Typography>
+                    </Box>
+                  </MenuItem>
+                  <Box px={2} py={1}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      endIcon={<i className="ri-logout-box-r-line" />}
+                      onClick={e => handleClose(e, '/login')}
+                      sx={{ '& .MuiButton-endIcon': { ml: 1.5 } }}
+                    >
+                      Logout
+                    </Button>
+                  </Box>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+    </>
+  )
 }
 
 export default UserDropdown

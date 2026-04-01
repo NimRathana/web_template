@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { ThemeProvider, extendTheme, lighten, darken } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
@@ -11,9 +11,11 @@ import primaryColorConfig from '@configs/primaryColorConfig'
 
 const CustomThemeProvider = ({ children, direction }) => {
   const { settings } = useSettings()
+  const [loading, setLoading] = useState(true)
 
   const theme = useMemo(() => {
     const coreTheme = defaultCoreTheme(settings.mode || 'light', direction)
+
     const colorScheme = {
       palette: {
         primary: {
@@ -28,12 +30,16 @@ const CustomThemeProvider = ({ children, direction }) => {
     return extendTheme({ ...coreTheme, ...colorScheme })
   }, [settings.mode, direction])
 
+  useEffect(() => {
+    setLoading(false)
+  }, [theme])
+
   return (
     <AppRouterCacheProvider options={{ prepend: true }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ModeChanger />
-        {children}
+        {loading ? null : children}
       </ThemeProvider>
     </AppRouterCacheProvider>
   )
