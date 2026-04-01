@@ -11,7 +11,6 @@ import {
   useTheme,
   Popover
 } from "@mui/material";
-import { HexColorPicker } from "react-colorful";
 import { useState } from "react";
 import { useSettings } from "@core/hooks/useSettings";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,6 +19,8 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import MonitorIcon from "@mui/icons-material/Monitor";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import "react-color-palette/css";
+import { ColorPicker, useColor } from "react-color-palette";
 
 const PRIMARY_COLORS = [
   { name: "purple", hex: "#8C57FF" },
@@ -34,10 +35,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
   const theme = useTheme();
   const { settings, updateSettings, resetSettings } = useSettings();
   const [pickerAnchor, setPickerAnchor] = useState(null);
-
-  const handleOpenPicker = (event) => setPickerAnchor(event.currentTarget);
-  const handleClosePicker = () => setPickerAnchor(null);
-  const isPickerOpen = Boolean(pickerAnchor);
+  const [color, setColor] = useColor("hex", settings.customColor);
 
   // Helper to get the active highlight color
   const activeColor = theme.palette.primary.main;
@@ -132,9 +130,10 @@ const ThemeCustomizer = ({ open, onClose }) => {
               </Box>
             </Box>
           ))}
+
           {/* Custom Picker */}
           <Box
-            onClick={handleOpenPicker}
+            onClick={(event) => setPickerAnchor(event.currentTarget)}
             sx={optionCardStyle(settings.primaryColor === "custom")}
           >
             <Box
@@ -142,41 +141,45 @@ const ThemeCustomizer = ({ open, onClose }) => {
                 width: 32,
                 height: 32,
                 borderRadius: "8px",
-                bgcolor: settings.primaryColor === "custom" ? settings.customColor || "#8C57FF" : alpha(theme.palette.text.secondary, 0.1),
+                bgcolor: settings.primaryColor === "custom" ? color.hex : alpha(theme.palette.text.secondary, 0.1),
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: 18,
+                color: settings.primaryColor === "custom" ? "#fff" : "text.secondary"
               }}
             >
               <i className="ri-palette-line" />
             </Box>
           </Box>
 
-          {/* HexColorPicker Popover */}
           <Popover
-            open={isPickerOpen}
+            open={Boolean(pickerAnchor)}
             anchorEl={pickerAnchor}
-            onClose={handleClosePicker}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-            transformOrigin={{ vertical: "top", horizontal: "left" }}
+            onClose={() => setPickerAnchor(null)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
             PaperProps={{
-            sx: { 
-              p: 2, 
-              mt: 1.5, 
-              borderRadius: '12px', 
-              bgcolor: 'background.paper',
-              boxShadow: theme.shadows[10],
-              border: `1px solid ${theme.palette.divider}`
-            }
-          }}
+              sx: {
+                p: 1.5,
+                mt: 1,
+                borderRadius: "12px",
+                boxShadow: theme.shadows[10],
+                border: `1px solid ${theme.palette.divider}`,
+              },
+            }}
           >
-            <Box>
-              <HexColorPicker
-                color={settings.customColor || "#8C57FF"}
-                onChange={(color) =>
-                  updateSettings({ primaryColor: "custom", customColor: color })
-                }
+            <Box sx={{ width: 200 }}>
+              <ColorPicker
+                width={200}
+                height={120}
+                color={color}
+                onChange={(newColor) => {
+                  setColor(newColor);
+                  updateSettings({ primaryColor: "custom", customColor: newColor.hex });
+                }}
+                hideAlpha
+                hideInput={["rgb", "hsv"]}
               />
             </Box>
           </Popover>
