@@ -245,7 +245,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={skin} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ skin })}
+                  onClick={() => updateSettings({ skin: skin })}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -303,7 +303,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={item} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ item })}
+                  onClick={() => updateSettings({ layout: item })}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -360,7 +360,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={item} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ item })}
+                  onClick={() => updateSettings({ contentWidth: item })}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -421,7 +421,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={item} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ item })}
+                  onClick={() => updateSettings({ direction: item })}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
