@@ -5,7 +5,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import './globals.css'
 
 import 'remixicon/fonts/remixicon.css';
-
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
 import type { ReactNode } from 'react'
 
 export const metadata = {
@@ -23,8 +23,8 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   const direction = 'ltr'
 
   return (
-    <html id="__next" dir={direction}>
-      <body className="flex is-full min-bs-full flex-auto flex-col">{children}</body>
+    <html id="__next" dir={direction} suppressHydrationWarning>
+      <body className="flex is-full min-bs-full flex-auto flex-col"><InitColorSchemeScript attribute="class" />{children}</body>
     </html>
   )
 }

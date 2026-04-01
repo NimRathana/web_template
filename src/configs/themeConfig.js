@@ -10,12 +10,12 @@
  * Another way is to clear the cookie from the browser's Application/Storage tab and then reload the page.
  */
 const themeConfig = {
-  templateName: 'Khawin', // Template name, can be used in the Logo and other places
-  settingsCookieName: 'khawin-cookie', // Name of the cookie which will store the user settings
+  templateName: 'Rathana', // Template name, can be used in the Logo and other places
+  settingsCookieName: 'cookie', // Name of the cookie which will store the user settings
   mode: 'light', // 'light', 'dark'
   layoutPadding: 24, // Common padding for header, content, footer layout components (in px)
   compactContentWidth: 1440, // in px
-  disableRipple: false // true, false
+  disableRipple: false, // true, false
 }
 
 export default themeConfig
