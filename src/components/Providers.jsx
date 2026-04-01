@@ -3,11 +3,11 @@ import { SettingsProvider } from '@core/contexts/settingsContext'
 import CustomThemeProvider from './theme'
 import { getMode, getSettingsFromCookie } from '@core/utils/serverHelpers'
 
-const Providers = props => {
+const Providers = async props => {
   const { children, direction } = props
 
-  const mode = getMode()
-  const settingsCookie = getSettingsFromCookie()
+  const mode = await getMode()
+  const settingsCookie = await getSettingsFromCookie()
 
   return (
     <VerticalNavProvider>
