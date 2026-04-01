@@ -1,5 +1,5 @@
-'use client'
-import React from 'react'
+"use client";
+
 import {
   Drawer,
   Box,
@@ -7,55 +7,91 @@ import {
   IconButton,
   Divider,
   Stack,
-  Tooltip,
-  Button,
-} from '@mui/material'
-import { useSettings } from '@core/hooks/useSettings'
-import CloseIcon from '@mui/icons-material/Close'
-import CheckIcon from '@mui/icons-material/Check'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
-import MonitorIcon from '@mui/icons-material/Monitor'
+  alpha,
+  useTheme,
+  Popover
+} from "@mui/material";
+import { HexColorPicker } from "react-colorful";
+import { useState } from "react";
+import { useSettings } from "@core/hooks/useSettings";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckIcon from "@mui/icons-material/Check";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import MonitorIcon from "@mui/icons-material/Monitor";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const PRIMARY_COLORS = [
-  { name: 'purple', hex: '#7E57C2' },
-  { name: 'teal', hex: '#009688' },
-  { name: 'amber', hex: '#FFC107' },
-  { name: 'red', hex: '#F44336' },
-  { name: 'blue', hex: '#2196F3' },
-  { name: 'indigo', hex: '#3F51B5' },
-]
+  { name: "purple", hex: "#8C57FF" },
+  { name: "teal", hex: "#009688" },
+  { name: "amber", hex: "#FFB400" },
+  { name: "red", hex: "#FF4C51" },
+  { name: "blue", hex: "#16B1FF" },
+  { name: "indigo", hex: "#3F51B5" },
+];
 
 const ThemeCustomizer = ({ open, onClose }) => {
-  const { settings, updateSettings, resetSettings } = useSettings()
+  const theme = useTheme();
+  const { settings, updateSettings, resetSettings } = useSettings();
+  const [pickerAnchor, setPickerAnchor] = useState(null);
 
-  // Helper function to check if an option is selected
+  const handleOpenPicker = (event) => setPickerAnchor(event.currentTarget);
+  const handleClosePicker = () => setPickerAnchor(null);
+  const isPickerOpen = Boolean(pickerAnchor);
+
+  // Helper to get the active highlight color
+  const activeColor = theme.palette.primary.main;
+
   const isSelected = (key, value) => {
-    if (settings[key] === value) return true
-    
-    // Default fallbacks
-    if (!settings[key]) {
-      if (value === 'default' || value === 'vertical' || value === 'compact' || value === 'ltr') {
-        return true
-      }
-    }
-    return false
-  }
+    if (settings[key] === value) return true;
+    const defaults = {
+      skin: "default",
+      layout: "vertical",
+      contentWidth: "compact",
+      direction: "ltr",
+    };
+    return !settings[key] && defaults[key] === value;
+  };
+
+  const optionCardStyle = (selected) => ({
+    flex: 1,
+    p: 1.5,
+    cursor: "pointer",
+    borderRadius: "10px",
+    position: "relative",
+    transition: "all 0.2s ease-in-out",
+    border: 2,
+    borderColor: selected ? "primary.main" : "divider",
+    "&:hover": {
+      borderColor: selected ? activeColor : alpha(activeColor, 0.5),
+      transform: "translateY(-2px)",
+      bgcolor: alpha(activeColor, 0.04),
+    },
+  });
 
   return (
-    <Drawer 
-      anchor="right" 
-      open={open} 
-      onClose={onClose} 
-      PaperProps={{ 
-        sx: { 
-          width: 340, 
-          p: 3, 
-        } 
+    <Drawer
+      anchor="right"
+      open={open}
+      onClose={onClose}
+      PaperProps={{
+        sx: {
+          width: 400,
+          bgcolor: "background.paper",
+          backgroundImage: "none",
+          boxShadow: theme.shadows[20],
+        },
       }}
     >
       {/* Header */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box
+        sx={{
+          p: 3,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Box>
           <Typography variant="h6" fontWeight={700}>
             Theme Customizer
@@ -64,262 +100,365 @@ const ThemeCustomizer = ({ open, onClose }) => {
             Customize & Preview in Real Time
           </Typography>
         </Box>
-        <IconButton onClick={onClose} sx={{ color: 'white' }}>
-          <CloseIcon />
-        </IconButton>
+        <Stack direction="row" spacing={1}>
+          <IconButton
+            onClick={resetSettings}
+            size="small"
+            sx={{ color: "text.secondary" }}
+          >
+            <RestartAltIcon />
+          </IconButton>
+          <IconButton onClick={onClose} size="small">
+            <CloseIcon />
+          </IconButton>
+        </Stack>
       </Box>
 
-      <Divider sx={{ mb: 3, borderColor: '#2A263F' }} />
+      <Divider />
 
-      {/* ==================== THEMING SECTION ==================== */}
-      <Box sx={{ 
-        px: 2, 
-        py: 1, 
-        borderRadius: 1, 
-        mb: 3 
-      }}>
+      <Box sx={{ p: 3 }}>
         {/* Primary Color */}
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+        >
           Primary Color
         </Typography>
-        <Stack direction="row" spacing={1.5} mb={3} flexWrap="wrap">
-          {PRIMARY_COLORS.map((color) => {
-            const selected = settings.primaryColor === color.name
-            return (
-              <Tooltip key={color.name} title={color.name.charAt(0).toUpperCase() + color.name.slice(1)}>
-                <Box
-                  onClick={() => updateSettings({ primaryColor: color.name })}
-                  sx={{
-                    width: 42,
-                    height: 42,
-                    bgcolor: color.hex,
-                    borderRadius: '12px',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    border: selected ? '3px solid #FFC107' : '2px solid transparent',
-                  }}
-                >
-                  {selected && (
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        inset: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <CheckIcon sx={{ color: 'white', fontSize: 18 }} />
-                    </Box>
-                  )}
-                </Box>
-              </Tooltip>
-            )
-          })}
+        <Stack direction="row" spacing={1} mb={4} flexWrap="wrap">
+          {PRIMARY_COLORS.map((color) => (
+            <Box key={color.name} onClick={() => updateSettings({ primaryColor: color.name })} sx={optionCardStyle(settings.primaryColor === color.name)}>
+              <Box sx={{ width: 32, height: 32, bgcolor: color.hex, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {settings.primaryColor === color.name && <CheckIcon sx={{ color: "white", fontSize: 16 }} />}
+              </Box>
+            </Box>
+          ))}
+          {/* Custom Picker */}
+          <Box
+            onClick={handleOpenPicker}
+            sx={optionCardStyle(settings.primaryColor === "custom")}
+          >
+            <Box
+              sx={{
+                width: 32,
+                height: 32,
+                borderRadius: "8px",
+                bgcolor: settings.primaryColor === "custom" ? settings.customColor || "#8C57FF" : alpha(theme.palette.text.secondary, 0.1),
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 18,
+              }}
+            >
+              <i className="ri-palette-line" />
+            </Box>
+          </Box>
+
+          {/* HexColorPicker Popover */}
+          <Popover
+            open={isPickerOpen}
+            anchorEl={pickerAnchor}
+            onClose={handleClosePicker}
+            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            transformOrigin={{ vertical: "top", horizontal: "left" }}
+            PaperProps={{
+            sx: { 
+              p: 2, 
+              mt: 1.5, 
+              borderRadius: '12px', 
+              bgcolor: 'background.paper',
+              boxShadow: theme.shadows[10],
+              border: `1px solid ${theme.palette.divider}`
+            }
+          }}
+          >
+            <Box>
+              <HexColorPicker
+                color={settings.customColor || "#8C57FF"}
+                onChange={(color) =>
+                  updateSettings({ primaryColor: "custom", customColor: color })
+                }
+              />
+            </Box>
+          </Popover>
         </Stack>
 
         {/* Theme Mode */}
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
-          Theme
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 2, fontWeight: 600, color: "text.primary" }}
+        >
+          Theme Mode
         </Typography>
-        <Stack direction="row" spacing={2} mb={3}>
+        <Stack direction="row" spacing={3} mb={4}>
           {[
-            { value: 'light', icon: <LightModeIcon />, label: 'Light' },
-            { value: 'dark', icon: <DarkModeIcon />, label: 'Dark' },
-            { value: 'system', icon: <MonitorIcon />, label: 'System' },
+            { value: "light", icon: <LightModeIcon />, label: "Light" },
+            { value: "dark", icon: <DarkModeIcon />, label: "Dark" },
+            { value: "system", icon: <MonitorIcon />, label: "System" },
           ].map((item) => {
-            const selected = (settings.mode || 'light') === item.value
+            const selected = (settings.mode || "light") === item.value;
             return (
               <Box
                 key={item.value}
                 onClick={() => updateSettings({ mode: item.value })}
-                sx={{
-                  flex: 1,
-                  p: 2,
-                  borderRadius: 2,
-                  border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 0.5,
-                }}
+                sx={optionCardStyle(selected)}
               >
-                <Box sx={{ color: selected ? '#FFC107' : '#A5A0B8', fontSize: 28 }}>
+                <Box
+                  sx={{
+                    color: selected ? activeColor : "text.secondary",
+                    textAlign: "center",
+                    mb: 0.5,
+                  }}
+                >
                   {item.icon}
                 </Box>
-                <Typography variant="caption" fontWeight={selected ? 600 : 400}>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  align="center"
+                  fontWeight={selected ? 600 : 400}
+                >
                   {item.label}
                 </Typography>
               </Box>
-            )
+            );
           })}
         </Stack>
 
         {/* Skins */}
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 2, fontWeight: 600, color: "text.primary" }}
+        >
           Skins
         </Typography>
-        <Stack direction="row" spacing={2}>
-          {['default', 'bordered'].map((skin) => {
-            const selected = isSelected('skin', skin)
+        <Stack direction="row" spacing={3} mb={4}>
+          {["default", "bordered"].map((skin) => {
+            const selected = isSelected("skin", skin);
+            const skinImages = {
+              default: "/images/settings/skin-default.png",
+              bordered: "/images/settings/skin-border.png",
+            };
+
             return (
-              <Box
-                key={skin}
-                onClick={() => updateSettings({ skin })}
-                sx={{
-                  flex: 1,
-                  p: 1.5,
-                  borderRadius: 2,
-                  border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
+              <Box key={skin} sx={{ textAlign: "center" }}>
                 <Box
+                  onClick={() => updateSettings({ skin })}
                   sx={{
-                    height: 60,
-                    bgcolor: '#1E1B2E',
-                    border: skin === 'bordered' ? '2px dashed #666' : 'none',
-                    borderRadius: 1,
-                    mb: 1,
+                    ...optionCardStyle(selected),
+                    p: 0,
+                    overflow: "hidden",
+                    display: "block",
+                    width: "fit-content",
                   }}
-                />
-                <Typography variant="caption" align="center" display="block" fontWeight={selected ? 600 : 400}>
-                  {skin.charAt(0).toUpperCase() + skin.slice(1)}
+                >
+                  <Box
+                    component="img"
+                    src={skinImages[skin]}
+                    alt={`${skin} skin`}
+                    sx={{
+                      display: "block",
+                      height: 66,
+                      objectFit: "contain",
+                      transition: "transform 0.3s ease, filter 0.3s ease",
+                      backgroundColor: alpha(activeColor, 0.05),
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  sx={{
+                    mt: 1.5,
+                    textTransform: "capitalize",
+                    fontWeight: selected ? 600 : 400,
+                    color: selected ? activeColor : "text.secondary",
+                  }}
+                >
+                  {skin}
                 </Typography>
-                {selected && (
-                  <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-                    <CheckIcon sx={{ color: '#FFC107', fontSize: 18 }} />
-                  </Box>
-                )}
               </Box>
-            )
+            );
           })}
         </Stack>
-      </Box>
 
-      {/* ==================== LAYOUT SECTION ==================== */}
-      <Box sx={{ px: 2, py: 1, borderRadius: 1 }}>
-        {/* Layout Types */}
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
+        {/* Layout */}
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 2, fontWeight: 600, color: "text.primary" }}
+        >
           Layout
         </Typography>
-        <Stack direction="row" spacing={1.5} mb={3}>
-          {['vertical', 'collapsed', 'horizontal'].map((layout) => {
-            const selected = isSelected('layout', layout)
+        <Stack direction="row" spacing={3} mb={4}>
+          {["vertical", "collapsed", "horizontal"].map((item) => {
+            const selected = isSelected("layout", item);
+            const images = {
+              vertical: "/images/settings/skin-default.png",
+              collapsed: "/images/settings/Collapsed.png",
+              horizontal: "/images/settings/Horizontal.png",
+            };
+
             return (
-              <Box
-                key={layout}
-                onClick={() => updateSettings({ layout })}
-                sx={{
-                  flex: 1,
-                  p: 1.5,
-                  borderRadius: 2,
-                  border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  bgcolor: '#12101F',
-                  cursor: 'pointer',
-                  position: 'relative',
-                }}
-              >
-                <Box sx={{ height: 70, bgcolor: '#1E1B2E', borderRadius: 1, mb: 1 }} />
-                <Typography variant="caption" align="center" display="block">
-                  {layout.charAt(0).toUpperCase() + layout.slice(1)}
+              <Box key={item} sx={{ textAlign: "center" }}>
+                <Box
+                  onClick={() => updateSettings({ item })}
+                  sx={{
+                    ...optionCardStyle(selected),
+                    p: 0,
+                    overflow: "hidden",
+                    display: "block",
+                    width: "fit-content",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={images[item]}
+                    alt={`${item}`}
+                    sx={{
+                      display: "block",
+                      height: 66,
+                      objectFit: "contain",
+                      transition: "transform 0.3s ease, filter 0.3s ease",
+                      backgroundColor: alpha(activeColor, 0.1),
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  sx={{
+                    mt: 1.5,
+                    textTransform: "capitalize",
+                    fontWeight: selected ? 600 : 400,
+                    color: selected ? activeColor : "text.secondary",
+                  }}
+                >
+                  {item}
                 </Typography>
-                {selected && (
-                  <CheckIcon sx={{ position: 'absolute', top: 8, right: 8, color: '#FFC107' }} />
-                )}
               </Box>
-            )
+            );
           })}
         </Stack>
 
-        {/* Content Width */}
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
+        {/* Content */}
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 2, fontWeight: 600, color: "text.primary" }}
+        >
           Content
         </Typography>
-        <Stack direction="row" spacing={1.5} mb={3}>
-          {['compact', 'wide'].map((content) => {
-            const selected = isSelected('contentWidth', content)
+        <Stack direction="row" spacing={3} mb={4}>
+          {["compact", "wide"].map((item) => {
+            const selected = isSelected("content", item);
+            const images = {
+              compact: "/images/settings/Compact.png",
+              wide: "/images/settings/Wide.png"
+            };
+
             return (
-              <Box
-                key={content}
-                onClick={() => updateSettings({ contentWidth: content })}
-                sx={{
-                  flex: 1,
-                  p: 1.5,
-                  borderRadius: 2,
-                  border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  bgcolor: '#12101F',
-                  cursor: 'pointer',
-                  position: 'relative',
-                }}
-              >
-                <Box sx={{ height: 55, bgcolor: '#1E1B2E', borderRadius: 1, mb: 1 }} />
-                <Typography variant="caption" align="center" display="block">
-                  {content.charAt(0).toUpperCase() + content.slice(1)}
+              <Box key={item} sx={{ textAlign: "center" }}>
+                <Box
+                  onClick={() => updateSettings({ item })}
+                  sx={{
+                    ...optionCardStyle(selected),
+                    p: 0,
+                    overflow: "hidden",
+                    display: "block",
+                    width: "fit-content",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={images[item]}
+                    alt={`${item}`}
+                    sx={{
+                      display: "block",
+                      height: 66,
+                      objectFit: "contain",
+                      transition: "transform 0.3s ease, filter 0.3s ease",
+                      backgroundColor: alpha(activeColor, 0.1),
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  sx={{
+                    mt: 1.5,
+                    textTransform: "capitalize",
+                    fontWeight: selected ? 600 : 400,
+                    color: selected ? activeColor : "text.secondary",
+                  }}
+                >
+                  {item}
                 </Typography>
-                {selected && (
-                  <CheckIcon sx={{ position: 'absolute', top: 8, right: 8, color: '#FFC107' }} />
-                )}
               </Box>
-            )
+            );
           })}
         </Stack>
 
         {/* Direction */}
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 2, fontWeight: 600, color: "text.primary" }}
+        >
           Direction
         </Typography>
-        <Stack direction="row" spacing={1.5}>
-          {['ltr', 'rtl'].map((dir) => {
-            const selected = isSelected('direction', dir)
+        <Stack direction="row" spacing={3} mb={4}>
+          {["ltr", "rtl"].map((item) => {
+            const selected = isSelected("direction", item);
+            const images = {
+              ltr: "/images/settings/ltr.png",
+              rtl: "/images/settings/rtl.png"
+            };
+            const directionLabels = {
+              ltr: "Left to Right",
+              rtl: "Right to Left"
+            };
+
             return (
-              <Box
-                key={dir}
-                onClick={() => updateSettings({ direction: dir })}
-                sx={{
-                  flex: 1,
-                  p: 2,
-                  borderRadius: 2,
-                  border: selected ? '2px solid #FFC107' : '1px solid #3A3550',
-                  bgcolor: '#12101F',
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  textTransform: 'uppercase',
-                  position: 'relative',
-                }}
-              >
-                {dir}
-                {selected && (
-                  <CheckIcon sx={{ position: 'absolute', top: 8, right: 8, color: '#FFC107' }} />
-                )}
+              <Box key={item} sx={{ textAlign: "center" }}>
+                <Box
+                  onClick={() => updateSettings({ item })}
+                  sx={{
+                    ...optionCardStyle(selected),
+                    p: 0,
+                    overflow: "hidden",
+                    display: "block",
+                    width: "fit-content",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={images[item]}
+                    alt={`${item}`}
+                    sx={{
+                      display: "block",
+                      height: 66,
+                      objectFit: "contain",
+                      transition: "transform 0.3s ease, filter 0.3s ease",
+                      backgroundColor: alpha(activeColor, 0.1),
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  sx={{
+                    mt: 1.5,
+                    textTransform: "capitalize",
+                    fontWeight: selected ? 600 : 400,
+                    color: selected ? activeColor : "text.secondary",
+                  }}
+                >
+                  {directionLabels[item]}
+                </Typography>
               </Box>
-            )
+            );
           })}
         </Stack>
       </Box>
-
-      {/* Reset Button */}
-      <Button
-        variant="outlined"
-        fullWidth
-        sx={{ 
-          mt: 4, 
-          borderColor: '#FFC107', 
-          color: '#FFC107', 
-          '&:hover': { 
-            borderColor: '#FFD54F',
-            bgcolor: 'rgba(255, 193, 7, 0.1)'
-          } 
-        }}
-        onClick={resetSettings}
-      >
-        Reset to Default
-      </Button>
     </Drawer>
-  )
-}
+  );
+};
 
-export default ThemeCustomizer
+export default ThemeCustomizer;
