@@ -351,7 +351,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
         </Typography>
         <Stack direction="row" spacing={3} mb={4}>
           {["compact", "wide"].map((item) => {
-            const selected = isSelected("content", item);
+            const selected = isSelected("contentWidth", item);
             const images = {
               compact: "/images/settings/Compact.png",
               wide: "/images/settings/Wide.png"
