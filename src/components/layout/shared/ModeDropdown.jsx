@@ -1,58 +1,150 @@
-'use client'
+"use client";
 
-// React Imports
-import { useRef, useState } from 'react'
+import { useRef, useState } from "react";
 
 // MUI Imports
-import Tooltip from '@mui/material/Tooltip'
-import IconButton from '@mui/material/IconButton'
+import {
+  Tooltip,
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Fade,
+} from "@mui/material";
+import { styled, alpha } from "@mui/material/styles";
 
-// Hook Imports
-import { useSettings } from '@core/hooks/useSettings'
+// Icon Imports
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import MonitorOutlinedIcon from "@mui/icons-material/MonitorOutlined";
+
+// Custom Hook
+import { useSettings } from "@core/hooks/useSettings";
+
+const StyledMenu = styled(Menu)(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 12,
+    marginTop: theme.spacing(1),
+    minWidth: 160,
+  },
+}));
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  margin: "4px 8px",
+  borderRadius: 8,
+  transition: "all 0.2s ease-in-out",
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+    color: theme.palette.primary.main,
+    "& .MuiListItemIcon-root": {
+      color: theme.palette.primary.main,
+    },
+  },
+  "&.Mui-selected": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.12),
+    color: theme.palette.primary.main,
+    fontWeight: 600,
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.primary.main, 0.18),
+    },
+  },
+}));
 
 const ModeDropdown = () => {
-  // States
-  const [tooltipOpen, setTooltipOpen] = useState(false)
+  const anchorRef = useRef(null);
+  const { settings, updateSettings } = useSettings();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Refs
-  const anchorRef = useRef(null)
+  const currentMode = settings.mode || "light";
 
-  // Hooks
-  const { settings, updateSettings } = useSettings()
+  const handleMenuOpen = () => setMenuOpen(true);
+  const handleMenuClose = () => setMenuOpen(false);
 
-  const handleToggle = () => {
-    if (settings.mode === 'dark') {
-      updateSettings({ mode: 'light' })
-    }
+  const handleModeSelect = (mode) => {
+    updateSettings({ mode });
+    handleMenuClose();
+  };
 
-    if (settings.mode === 'light') {
-      updateSettings({ mode: 'dark' })
-    }
-  }
-
-  const getModeIcon = () => {
-    if (settings.mode === 'dark') {
-      return 'ri-moon-clear-line'
-    } else {
-      return 'ri-sun-line'
-    }
-  }
+  // Define icons for dynamic rendering
+  const modeIcons = {
+    light: <LightModeOutlinedIcon />,
+    dark: <DarkModeOutlinedIcon />,
+    system: <MonitorOutlinedIcon />,
+  };
 
   return (
     <>
-      <Tooltip
-        title={settings.mode + ' Mode'}
-        onOpen={() => setTooltipOpen(true)}
-        onClose={() => setTooltipOpen(false)}
-        open={tooltipOpen}
-        PopperProps={{ className: 'capitalize' }}
-      >
-        <IconButton ref={anchorRef} onClick={handleToggle} className='text-textPrimary'>
-          <i className={getModeIcon()} />
+      <Tooltip title="Theme Mode" arrow TransitionComponent={Fade}>
+        <IconButton
+          ref={anchorRef}
+          onClick={handleMenuOpen}
+          sx={{
+            color: "text.primary",
+            transition: "transform 0.3s ease-in-out",
+            "&:hover": { transform: "rotate(15deg)" },
+          }}
+          aria-label="Select theme mode"
+        >
+          {modeIcons[currentMode]}
         </IconButton>
       </Tooltip>
-    </>
-  )
-}
 
-export default ModeDropdown
+      <StyledMenu
+        anchorEl={anchorRef.current}
+        open={menuOpen}
+        onClose={handleMenuClose}
+        TransitionComponent={Fade}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <StyledMenuItem
+          selected={currentMode === "light"}
+          onClick={() => handleModeSelect("light")}
+        >
+          <ListItemIcon>
+            <LightModeOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body2", fontWeight: 500 }}
+            sx={{ ml: 2 }}
+          >
+            Light
+          </ListItemText>
+        </StyledMenuItem>
+
+        <StyledMenuItem
+          selected={currentMode === "dark"}
+          onClick={() => handleModeSelect("dark")}
+        >
+          <ListItemIcon>
+            <DarkModeOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body2", fontWeight: 500 }}
+            sx={{ ml: 2 }}
+          >
+            Dark
+          </ListItemText>
+        </StyledMenuItem>
+
+        <StyledMenuItem
+          selected={currentMode === "system"}
+          onClick={() => handleModeSelect("system")}
+        >
+          <ListItemIcon>
+            <MonitorOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText
+            primaryTypographyProps={{ variant: "body2", fontWeight: 500 }}
+            sx={{ ml: 2 }}
+          >
+            System
+          </ListItemText>
+        </StyledMenuItem>
+      </StyledMenu>
+    </>
+  );
+};
+
+export default ModeDropdown;

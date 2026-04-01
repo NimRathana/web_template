@@ -1,129 +1,195 @@
-'use client'
+"use client";
 
-import { useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { styled } from '@mui/material/styles'
-import Badge from '@mui/material/Badge'
-import Avatar from '@mui/material/Avatar'
-import Popper from '@mui/material/Popper'
-import Fade from '@mui/material/Fade'
-import Paper from '@mui/material/Paper'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-import MenuList from '@mui/material/MenuList'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
-const BadgeContentSpan = styled('span')(({ theme }) => ({
-  width: 8,
-  height: 8,
-  borderRadius: '50%',
-  cursor: 'pointer',
+// MUI Imports
+import {
+  styled,
+  alpha,
+  Badge,
+  Avatar,
+  Popper,
+  Fade,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  Typography,
+  Divider,
+  MenuItem,
+  Button,
+  Box,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+
+// Styled components for that "Premium" feel
+const BadgeContentSpan = styled("span")(({ theme }) => ({
+  width: 10,
+  height: 10,
+  borderRadius: "50%",
   backgroundColor: theme.palette.success.main,
-  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
-}))
+  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+}));
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  margin: "0 8px",
+  borderRadius: theme.shape.borderRadius,
+  padding: "10px 12px",
+  transition: "all 0.2s",
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+    "& .MuiTypography-root": { color: theme.palette.primary.main },
+    "& i": { color: theme.palette.primary.main },
+  },
+}));
 
 const UserDropdown = () => {
-  const [open, setOpen] = useState(false)
-  const anchorRef = useRef(null)
-  const router = useRouter()
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
+  const router = useRouter();
 
-  const handleToggle = () => setOpen(prev => !prev)
+  const handleToggle = () => setOpen((prev) => !prev);
 
   const handleClose = (event, url) => {
-    if (url) router.push(url)
-    if (anchorRef.current && anchorRef.current.contains(event?.target)) return
-    setOpen(false)
-  }
+    if (url) router.push(url);
+    // Prevents closing if clicking the toggle button itself (handled by handleToggle)
+    if (anchorRef.current && anchorRef.current.contains(event?.target)) return;
+    setOpen(false);
+  };
 
   return (
     <>
       <Badge
         overlap="circular"
-        badgeContent={<BadgeContentSpan onClick={handleToggle} />}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        badgeContent={<BadgeContentSpan />}
+        onClick={handleToggle}
+        sx={{ cursor: "pointer" }}
       >
         <Avatar
           ref={anchorRef}
           alt="John Doe"
           src="/images/avatars/1.png"
-          onClick={handleToggle}
-          sx={{ width: 38, height: 38, cursor: 'pointer' }}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
+          sx={{
+            width: 40,
+            height: 40,
+            transition: "box-shadow 0.2s",
+            boxShadow: open
+              ? (theme) => `0 0 0 2px ${theme.palette.primary.main}`
+              : "none",
+          }}
         />
       </Badge>
 
       <Popper
         open={open}
+        anchorEl={anchorRef.current}
+        placement="bottom-end"
         transition
         disablePortal
-        placement="bottom-end"
-        anchorEl={anchorRef.current}
-        sx={{ zIndex: 1200, minWidth: 240, mt: 1 }}
+        sx={{ zIndex: 1200, mt: 1.5 }}
       >
-        {({ TransitionProps, placement }) => (
-          <Fade
-            {...TransitionProps}
-            style={{
-              transformOrigin: placement === 'bottom-end' ? 'right top' : 'left top'
-            }}
-          >
-            <Paper elevation={3}>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={250}>
+            <Paper
+              elevation={8}
+              sx={{
+                mt: 1.5,
+                minWidth: 230,
+                borderRadius: "12px",
+                overflow: "hidden",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+              }}
+            >
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList>
+                  {/* User Profile Header */}
                   <Box
-                    display="flex"
-                    alignItems="center"
-                    px={2}
-                    py={1}
-                    gap={2}
-                    tabIndex={-1}
+                    sx={{
+                      px: 2,
+                      py: 1.5,
+                      backgroundColor: (theme) =>
+                        alpha(theme.palette.primary.main, 0.02),
+                    }}
                   >
-                    <Avatar alt="John Doe" src="/images/avatars/1.png" />
-                    <Box display="flex" flexDirection="column">
-                      <Typography fontWeight={500} color="text.primary">
-                        John Doe
-                      </Typography>
-                      <Typography variant="caption">Admin</Typography>
+                    <Box display="flex" alignItems="center" gap={1.5}>
+                      <Avatar
+                        src="/images/avatars/1.png"
+                        sx={{ width: 44, height: 44 }}
+                      />
+                      <Box>
+                        <Typography
+                          variant="subtitle2"
+                          noWrap
+                          sx={{ fontWeight: 600 }}
+                        >
+                          John Doe
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          display="block"
+                        >
+                          admin@example.com
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
-                  <Divider sx={{ my: 0.5 }} />
-                  <MenuItem onClick={handleClose}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <i className="ri-user-3-line" />
-                      <Typography color="text.primary">My Profile</Typography>
-                    </Box>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <i className="ri-settings-4-line" />
-                      <Typography color="text.primary">Settings</Typography>
-                    </Box>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <i className="ri-money-dollar-circle-line" />
-                      <Typography color="text.primary">Pricing</Typography>
-                    </Box>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <i className="ri-question-line" />
-                      <Typography color="text.primary">FAQ</Typography>
-                    </Box>
-                  </MenuItem>
-                  <Box px={2} py={1}>
+
+                  <Divider sx={{ mb: 1 }} />
+
+                  {/* Menu Items */}
+                  {[
+                    {
+                      label: "My Profile",
+                      icon: "ri-user-3-line",
+                      url: "/profile",
+                    },
+                    {
+                      label: "Settings",
+                      icon: "ri-settings-4-line",
+                      url: "/settings",
+                    },
+                    {
+                      label: "Pricing",
+                      icon: "ri-money-dollar-circle-line",
+                      url: "/pricing",
+                    },
+                    { label: "FAQ", icon: "ri-question-line", url: "/faq" },
+                  ].map((item) => (
+                    <StyledMenuItem
+                      key={item.label}
+                      onClick={(e) => handleClose(e, item.url)}
+                    >
+                      <ListItemIcon sx={{ minWidth: "32px !important" }}>
+                        <i
+                          className={item.icon}
+                          style={{ fontSize: "1.2rem" }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={item.label}
+                        primaryTypographyProps={{
+                          variant: "body2",
+                          fontWeight: 500,
+                        }}
+                      />
+                    </StyledMenuItem>
+                  ))}
+
+                  <Divider sx={{ my: 1 }} />
+
+                  {/* Logout Action */}
+                  <Box px={2} pb={1.5} pt={0.5}>
                     <Button
                       fullWidth
-                      variant="contained"
-                      color="error"
-                      size="small"
-                      endIcon={<i className="ri-logout-box-r-line" />}
-                      onClick={e => handleClose(e, '/login')}
-                      sx={{ '& .MuiButton-endIcon': { ml: 1.5 } }}
+                      variant='contained'
+                      color='error'
+                      size='small'
+                      endIcon={<i className='ri-logout-box-r-line' />}
+                      onClick={e => handleDropdownClose(e, '/login')}
+                      sx={{ '& .MuiButton-endIcon': { marginInlineStart: 1.5 } }}
                     >
                       Logout
                     </Button>
@@ -135,7 +201,7 @@ const UserDropdown = () => {
         )}
       </Popper>
     </>
-  )
-}
+  );
+};
 
-export default UserDropdown
+export default UserDropdown;
