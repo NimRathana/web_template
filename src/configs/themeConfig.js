@@ -17,7 +17,6 @@ const themeConfig = {
   layoutPadding: 24, // Common padding for header, content, footer layout components (in px)
   compactContentWidth: 1440, // in px
   disableRipple: false, // true, false
-  templateName: 'Materio',
   homePageUrl: '/dashboards',
   skin: 'default',
   semiDark: false,

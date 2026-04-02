@@ -78,9 +78,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
       PaperProps={{
         sx: {
           width: 400,
-          bgcolor: "background.paper",
-          backgroundImage: "none",
-          boxShadow: theme.shadows[20],
         },
       }}
     >

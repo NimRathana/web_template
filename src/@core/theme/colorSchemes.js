@@ -1,6 +1,4 @@
-const colorSchemes = () => {
-  const skin = 'default'
-
+const colorSchemes = (skin = 'default') => {
   return {
     light: {
       palette: {

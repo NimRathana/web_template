@@ -36,9 +36,7 @@ import toggleButton from './toggle-button'
 import tooltip from './tooltip'
 import typography from './typography'
 
-const overrides = () => {
-  const skin = 'default'
-
+const overrides = (skin = 'default') => {
   return Object.assign(
     {},
     Accordion(skin),

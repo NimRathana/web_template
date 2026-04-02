@@ -11,11 +11,11 @@ import typography from './typography'
 
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700', '800', '900'] })
 
-const theme = (mode, direction) => {
+const theme = (mode, direction, skin) => {
   return {
     direction,
-    components: overrides(),
-    colorSchemes: colorSchemes(),
+    components: overrides(skin),
+    colorSchemes: colorSchemes(skin),
     ...spacing,
     shape: {
       borderRadius: 6,

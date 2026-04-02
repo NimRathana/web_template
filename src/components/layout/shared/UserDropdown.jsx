@@ -11,7 +11,7 @@ import {
   Avatar,
   Popper,
   Fade,
-  Paper,
+  Card,
   ClickAwayListener,
   MenuList,
   Typography,
@@ -92,16 +92,7 @@ const UserDropdown = () => {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={250}>
-            <Paper
-              elevation={8}
-              sx={{
-                mt: 1.5,
-                minWidth: 230,
-                borderRadius: "12px",
-                overflow: "hidden",
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-              }}
-            >
+            <Card sx={{ mt: 1.5 }}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList>
                   {/* User Profile Header */}
@@ -196,7 +187,7 @@ const UserDropdown = () => {
                   </Box>
                 </MenuList>
               </ClickAwayListener>
-            </Paper>
+            </Card>
           </Fade>
         )}
       </Popper>
