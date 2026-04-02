@@ -15,20 +15,43 @@ const CustomThemeProvider = ({ children, direction }) => {
 
   const theme = useMemo(() => {
     const coreTheme = defaultCoreTheme(settings.mode || 'light', direction)
+    const mainColor = settings.primaryColor || primaryColorConfig[0].main
 
-    const colorScheme = {
-      palette: {
-        primary: {
-          main: primaryColorConfig[0].main,
-          light: lighten(primaryColorConfig[0].main, 0.2),
-          dark: darken(primaryColorConfig[0].main, 0.1),
-        },
-      },
-      colorSchemeSelector: 'class',
+    // We define the full primary object to include the custom opacity strings 
+    // that your chip.js and colorSchemes.js require.
+    const primaryPalette = {
+      main: mainColor,
+      light: lighten(mainColor, 0.2),
+      dark: darken(mainColor, 0.1),
+      contrastText: '#fff',
+      // These reference the internal MUI channel, making them dynamic
+      lighterOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.08)',
+      lightOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.16)',
+      mainOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.24)',
+      darkOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.32)',
+      darkerOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.38)'
     }
 
-    return extendTheme({ ...coreTheme, ...colorScheme })
-  }, [settings.mode, direction])
+    return extendTheme({
+      ...coreTheme,
+      colorSchemes: {
+        ...coreTheme.colorSchemes,
+        light: {
+          palette: {
+            ...coreTheme.colorSchemes?.light?.palette,
+            primary: primaryPalette
+          }
+        },
+        dark: {
+          palette: {
+            ...coreTheme.colorSchemes?.dark?.palette,
+            primary: primaryPalette
+          }
+        }
+      },
+      colorSchemeSelector: 'class',
+    })
+  }, [settings.primaryColor, settings.mode, direction])
 
   useEffect(() => {
     setLoading(false)

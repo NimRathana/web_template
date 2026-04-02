@@ -1,15 +1,14 @@
+'use client'
+
 // MUI Imports
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import Chip from '@mui/material/Chip'
-
-// Third-party Imports
+import Button from '@mui/material/Button'
 import classnames from 'classnames'
-
-// Styles Imports
 import tableStyles from '@core/styles/table.module.css'
+import { useSettings } from '@core/hooks/useSettings'
 
-// Vars
 const rowsData = [
   {
     name: 'Jordan Stevenson',
@@ -86,8 +85,16 @@ const rowsData = [
 ]
 
 const Table = () => {
+  const { settings } = useSettings()
   return (
     <Card>
+      <Button variant='contained'>
+        {settings.primaryColor}
+      </Button>
+      <Chip
+        variant='tonal'
+        label='Nim Rathana'
+      />
       <div className='overflow-x-auto'>
         <table className={tableStyles.table}>
           <thead>
