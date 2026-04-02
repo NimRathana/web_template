@@ -14,8 +14,13 @@ export const SettingsContext = createContext(null)
 export const SettingsProvider = props => {
   // Initial Settings
   const initialSettings = {
-    mode: themeConfig.mode
-  }
+    mode: themeConfig.mode,
+    primaryColor: themeConfig.primaryColor,
+    skin: themeConfig.skin,
+    layout: themeConfig.layout,
+    contentWidth: themeConfig.contentWidth,
+    direction: themeConfig.direction
+  };
 
   const updatedInitialSettings = {
     ...initialSettings,

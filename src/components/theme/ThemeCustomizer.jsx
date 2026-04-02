@@ -21,6 +21,8 @@ import MonitorIcon from "@mui/icons-material/Monitor";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import "react-color-palette/css";
 import { ColorPicker, useColor } from "react-color-palette";
+import themeConfig from "@configs/themeConfig";
+import primaryColorConfig from "@configs/primaryColorConfig";
 
 const PRIMARY_COLORS = [
   { name: "purple", hex: "#8C57FF" },
@@ -35,20 +37,22 @@ const ThemeCustomizer = ({ open, onClose }) => {
   const theme = useTheme();
   const { settings, updateSettings, resetSettings } = useSettings();
   const [pickerAnchor, setPickerAnchor] = useState(null);
-  const [color, setColor] = useColor("hex", settings.customColor);
+  const [color, setColor] = useColor("hex", primaryColorConfig[0].main);
 
-  // Helper to get the active highlight color
-  const activeColor = theme.palette.primary.main;
+  const activeColor = settings.primaryColor || theme.palette.primary.main;
 
   const isSelected = (key, value) => {
-    if (settings[key] === value) return true;
-    const defaults = {
-      skin: "default",
-      layout: "vertical",
-      contentWidth: "compact",
-      direction: "ltr",
-    };
-    return !settings[key] && defaults[key] === value;
+    if (settings[key] !== undefined && settings[key] !== null) {
+      return settings[key] === value;
+    }
+
+    return themeConfig[key] === value;
+  };
+
+  const handleChange = (field, value) => {
+    updateSettings({
+      [field]: value
+    })
   };
 
   const optionCardStyle = (selected) => ({
@@ -59,11 +63,10 @@ const ThemeCustomizer = ({ open, onClose }) => {
     position: "relative",
     transition: "all 0.2s ease-in-out",
     border: 2,
-    borderColor: selected ? "primary.main" : "divider",
+    borderColor: selected ? activeColor : "divider",
+    bgcolor: selected ? alpha(activeColor, 0.04) : "transparent",
     "&:hover": {
-      borderColor: selected ? activeColor : alpha(activeColor, 0.5),
-      transform: "translateY(-2px)",
-      bgcolor: alpha(activeColor, 0.04),
+      borderColor: selected ? activeColor : "text.secondary",
     },
   });
 
@@ -124,9 +127,9 @@ const ThemeCustomizer = ({ open, onClose }) => {
         </Typography>
         <Stack direction="row" spacing={1} mb={4} flexWrap="wrap">
           {PRIMARY_COLORS.map((color) => (
-            <Box key={color.name} onClick={() => updateSettings({ primaryColor: color.name })} sx={optionCardStyle(settings.primaryColor === color.name)}>
+            <Box key={color.name} onClick={() => handleChange("primaryColor", color.hex)} sx={optionCardStyle(settings.primaryColor === color.hex)}>
               <Box sx={{ width: 32, height: 32, bgcolor: color.hex, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {settings.primaryColor === color.name && <CheckIcon sx={{ color: "white", fontSize: 16 }} />}
+                {settings.primaryColor === color.hex && <CheckIcon sx={{ color: "white", fontSize: 16 }} />}
               </Box>
             </Box>
           ))}
@@ -134,14 +137,14 @@ const ThemeCustomizer = ({ open, onClose }) => {
           {/* Custom Picker */}
           <Box
             onClick={(event) => setPickerAnchor(event.currentTarget)}
-            sx={optionCardStyle(settings.primaryColor === "custom")}
+            sx={optionCardStyle(!PRIMARY_COLORS.some(c => c.hex === settings.primaryColor))}
           >
             <Box
               sx={{
                 width: 32,
                 height: 32,
                 borderRadius: "8px",
-                bgcolor: settings.primaryColor === "custom" ? color.hex : alpha(theme.palette.text.secondary, 0.1),
+                bgcolor: settings.primaryColor && !PRIMARY_COLORS.some(c => c.hex === settings.primaryColor) ? settings.primaryColor : "transparent",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -174,9 +177,11 @@ const ThemeCustomizer = ({ open, onClose }) => {
                 width={200}
                 height={120}
                 color={color}
-                onChange={(newColor) => {
-                  setColor(newColor);
-                  updateSettings({ primaryColor: "custom", customColor: newColor.hex });
+                onChange={setColor}
+                onChangeComplete={(newColor) => {
+                  if (newColor.hex.toLowerCase() !== settings.primaryColor?.toLowerCase()) {
+                    handleChange("primaryColor", newColor.hex);
+                  }
                 }}
                 hideAlpha
                 hideInput={["rgb", "hsv"]}
@@ -202,7 +207,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box
                 key={item.value}
-                onClick={() => updateSettings({ mode: item.value })}
+                onClick={() => handleChange('mode', item.value)}
                 sx={optionCardStyle(selected)}
               >
                 <Box
@@ -245,7 +250,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={skin} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ skin: skin })}
+                  onClick={() => handleChange('skin', skin)}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -263,7 +268,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
                       height: 66,
                       objectFit: "contain",
                       transition: "transform 0.3s ease, filter 0.3s ease",
-                      backgroundColor: alpha(activeColor, 0.05),
                     }}
                   />
                 </Box>
@@ -303,7 +307,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={item} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ layout: item })}
+                  onClick={() => handleChange('layout', item)}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -321,7 +325,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
                       height: 66,
                       objectFit: "contain",
                       transition: "transform 0.3s ease, filter 0.3s ease",
-                      backgroundColor: alpha(activeColor, 0.1),
                     }}
                   />
                 </Box>
@@ -360,7 +363,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={item} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ contentWidth: item })}
+                  onClick={() => handleChange('contentWidth', item)}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -378,7 +381,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
                       height: 66,
                       objectFit: "contain",
                       transition: "transform 0.3s ease, filter 0.3s ease",
-                      backgroundColor: alpha(activeColor, 0.1),
                     }}
                   />
                 </Box>
@@ -421,7 +423,7 @@ const ThemeCustomizer = ({ open, onClose }) => {
             return (
               <Box key={item} sx={{ textAlign: "center" }}>
                 <Box
-                  onClick={() => updateSettings({ direction: item })}
+                  onClick={() => handleChange('direction', item)}
                   sx={{
                     ...optionCardStyle(selected),
                     p: 0,
@@ -439,7 +441,6 @@ const ThemeCustomizer = ({ open, onClose }) => {
                       height: 66,
                       objectFit: "contain",
                       transition: "transform 0.3s ease, filter 0.3s ease",
-                      backgroundColor: alpha(activeColor, 0.1),
                     }}
                   />
                 </Box>

@@ -2,9 +2,13 @@
 
 import { useState } from 'react'
 import ThemeCustomizer from '@components/theme/ThemeCustomizer'
+import { useTheme } from '@mui/material/styles'
+import { useSettings } from '@core/hooks/useSettings'
 
 const LayoutWrapper = ({ verticalLayout }) => {
   const [open, setOpen] = useState(false)
+  const theme = useTheme();
+  const { settings } = useSettings();
 
   return (
     <div className='flex flex-col flex-auto'>
@@ -22,7 +26,7 @@ const LayoutWrapper = ({ verticalLayout }) => {
           width: 40,
           height: 40,
           borderRadius: '20px 0 0 20px',  
-          backgroundColor: '#FFC107',    
+          backgroundColor: settings.primaryColor || theme.palette.primary.main,    
           border: 'none',
           boxShadow: '0 4px 15px rgba(255, 193, 7, 0.35)',
           display: 'flex',
