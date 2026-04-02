@@ -1,7 +1,7 @@
 // Util Imports
 import { menuClasses, verticalNavClasses } from '@menu/utils/menuClasses'
 
-const navigationCustomStyles = theme => {
+const navigationCustomStyles = (theme, skin = 'default') => {
   return {
     color: 'var(--mui-palette-text-primary)',
     zIndex: 'var(--drawer-z-index) !important',
@@ -14,7 +14,7 @@ const navigationCustomStyles = theme => {
     },
     [`& .${verticalNavClasses.container}`]: {
       transition: 'none',
-      borderColor: 'transparent',
+      border: skin === 'bordered' ? '1px solid var(--mui-palette-divider)' : 'transparent',
       [`& .${verticalNavClasses.toggled}`]: {
         boxShadow: 'var(--mui-customShadows-lg)'
       }

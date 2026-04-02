@@ -19,6 +19,7 @@ import useVerticalNav from '@menu/hooks/useVerticalNav'
 
 // Style Imports
 import navigationCustomStyles from '@core/styles/vertical/navigationCustomStyles'
+import { useSettings } from '@core/hooks/useSettings'
 
 const StyledBoxForShadow = styled('div')(({ theme }) => ({
   top: 60,
@@ -40,6 +41,7 @@ const Navigation = () => {
   // Hooks
   const theme = useTheme()
   const { isBreakpointReached, toggleVerticalNav } = useVerticalNav()
+  const { settings } = useSettings()
 
   // Refs
   const shadowRef = useRef(null)
@@ -62,7 +64,7 @@ const Navigation = () => {
   return (
     // eslint-disable-next-line lines-around-comment
     // Sidebar Vertical Menu
-    <VerticalNav customStyles={navigationCustomStyles(theme)}>
+    <VerticalNav customStyles={navigationCustomStyles(theme, settings.skin)}>
       {/* Nav Header including Logo & nav toggle icons  */}
       <NavHeader>
         <Link href='/'>
