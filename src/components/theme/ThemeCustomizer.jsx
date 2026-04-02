@@ -25,7 +25,7 @@ import themeConfig from "@configs/themeConfig";
 import primaryColorConfig from "@configs/primaryColorConfig";
 
 const PRIMARY_COLORS = [
-  { name: "purple", hex: "#8C57FF" },
+  { name: "purple", hex: primaryColorConfig[0].main },
   { name: "teal", hex: "#009688" },
   { name: "amber", hex: "#FFB400" },
   { name: "red", hex: "#FF4C51" },
