@@ -36,7 +36,9 @@
     "tailwind.config.js",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts", 
+    "src/app/layout.jsx", 
+    "src/components/Link.jsx"  
   ],
   "exclude": ["src/node_modules"]
 }
