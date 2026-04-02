@@ -6,5 +6,9 @@
     "**/*.js",
     "**/*.tsx",
     "**/*.jsx"
-  ]
+  ],
+  "files.associations": {
+    "*.jsx": "javascriptreact",
+    "*.tsx": "typescriptreact"
+  }
 }
