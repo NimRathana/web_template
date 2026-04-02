@@ -92,7 +92,8 @@ const Table = () => {
         {settings.primaryColor}
       </Button>
       <Chip
-        variant='tonal'
+        variant='outlined'
+        color='primary'
         label='Nim Rathana'
       />
       <div className='overflow-x-auto'>

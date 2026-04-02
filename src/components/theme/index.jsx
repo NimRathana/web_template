@@ -8,6 +8,7 @@ import ModeChanger from './ModeChanger'
 import { useSettings } from '@core/hooks/useSettings'
 import defaultCoreTheme from '@core/theme'
 import primaryColorConfig from '@configs/primaryColorConfig'
+import themeConfig from '@configs/themeConfig'
 
 const CustomThemeProvider = ({ children, direction }) => {
   const { settings } = useSettings()
@@ -17,20 +18,11 @@ const CustomThemeProvider = ({ children, direction }) => {
     const coreTheme = defaultCoreTheme(settings.mode || 'light', direction)
     const mainColor = settings.primaryColor || primaryColorConfig[0].main
 
-    // We define the full primary object to include the custom opacity strings 
-    // that your chip.js and colorSchemes.js require.
     const primaryPalette = {
       main: mainColor,
       light: lighten(mainColor, 0.2),
       dark: darken(mainColor, 0.1),
-      contrastText: '#fff',
-      // These reference the internal MUI channel, making them dynamic
-      lighterOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.08)',
-      lightOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.16)',
-      mainOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.24)',
-      darkOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.32)',
-      darkerOpacity: 'rgb(var(--mui-palette-primary-mainChannel) / 0.38)'
-    }
+    };
 
     return extendTheme({
       ...coreTheme,
@@ -39,17 +31,17 @@ const CustomThemeProvider = ({ children, direction }) => {
         light: {
           palette: {
             ...coreTheme.colorSchemes?.light?.palette,
-            primary: primaryPalette
+            primary: primaryPalette,
           }
         },
         dark: {
           palette: {
             ...coreTheme.colorSchemes?.dark?.palette,
-            primary: primaryPalette
+            primary: primaryPalette,
           }
         }
       },
-      colorSchemeSelector: 'class',
+      colorSchemeSelector: 'class'
     })
   }, [settings.primaryColor, settings.mode, direction])
 
