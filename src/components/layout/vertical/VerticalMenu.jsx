@@ -17,6 +17,7 @@ import StyledVerticalNavExpandIcon from '@menu/styles/vertical/StyledVerticalNav
 // Style Imports
 import menuItemStyles from '@core/styles/vertical/menuItemStyles'
 import menuSectionStyles from '@core/styles/vertical/menuSectionStyles'
+import { useSettings } from '@core/hooks/useSettings'
 
 const RenderExpandIcon = ({ open, transitionDuration }) => (
   <StyledVerticalNavExpandIcon open={open} transitionDuration={transitionDuration}>
@@ -27,7 +28,8 @@ const RenderExpandIcon = ({ open, transitionDuration }) => (
 const VerticalMenu = ({ scrollMenu }) => {
   // Hooks
   const theme = useTheme()
-  const { isBreakpointReached, transitionDuration, isToggled } = useVerticalNav()
+  const { settings } = useSettings()
+  const { isBreakpointReached, transitionDuration } = useVerticalNav()
   const ScrollWrapper = isBreakpointReached ? 'div' : PerfectScrollbar
 
   return (
@@ -46,7 +48,7 @@ const VerticalMenu = ({ scrollMenu }) => {
     >
       {/* Vertical Menu */}
       <Menu
-        menuItemStyles={menuItemStyles(theme)}
+        menuItemStyles={menuItemStyles(theme, settings.primaryColor)}
         renderExpandIcon={({ open }) => <RenderExpandIcon open={open} transitionDuration={transitionDuration} />}
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(theme)}

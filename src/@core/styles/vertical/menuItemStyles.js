@@ -4,7 +4,9 @@ import { lighten } from '@mui/material/styles'
 // Util Imports
 import { menuClasses } from '@menu/utils/menuClasses'
 
-const menuItemStyles = theme => {
+const menuItemStyles = (theme, primaryColor) => {
+  const mainColor = primaryColor || theme.palette.primary.main
+  const lightColor = lighten(mainColor, 0.5)
   return {
     root: {
       marginBlockStart: theme.spacing(1.5),
@@ -22,8 +24,8 @@ const menuItemStyles = theme => {
         color: 'var(--mui-palette-primary-contrastText)',
         background:
           theme.direction === 'ltr'
-            ? `linear-gradient(270deg, var(--mui-palette-primary-main), ${lighten(theme.palette.primary.main, 0.5)} 100%)`
-            : `linear-gradient(270deg, ${lighten(theme.palette.primary.main, 0.5)}, var(--mui-palette-primary-main) 100%)`,
+            ? `linear-gradient(270deg, ${mainColor}, ${lightColor} 100%)`
+            : `linear-gradient(270deg, ${lightColor}, ${mainColor} 100%)`,
         [`& .${menuClasses.icon}`]: {
           color: 'inherit'
         }
