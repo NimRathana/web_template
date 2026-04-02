@@ -9,12 +9,12 @@ import { useSettings } from '@core/hooks/useSettings'
 import defaultCoreTheme from '@core/theme'
 import primaryColorConfig from '@configs/primaryColorConfig'
 
-const CustomThemeProvider = ({ children, direction }) => {
+const CustomThemeProvider = ({ children }) => {
   const { settings } = useSettings()
   const [loading, setLoading] = useState(true)
 
   const theme = useMemo(() => {
-    const coreTheme = defaultCoreTheme(settings.mode || 'light', direction, settings.skin || 'default')
+    const coreTheme = defaultCoreTheme(settings.mode || 'light', settings.direction || 'ltr', settings.skin || 'default')
     const mainColor = settings.primaryColor || primaryColorConfig[0].main
 
     const primaryPalette = {
@@ -42,7 +42,7 @@ const CustomThemeProvider = ({ children, direction }) => {
       },
       colorSchemeSelector: 'class'
     })
-  }, [settings.primaryColor, settings.skin, settings.mode, direction])
+  }, [settings.primaryColor, settings.skin, settings.mode, settings.direction])
 
   useEffect(() => {
     setLoading(false)
