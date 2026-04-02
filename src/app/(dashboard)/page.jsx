@@ -5,11 +5,7 @@ import Grid from '@mui/material/Grid'
 import AllComponentMui from '@views/dashboard'
 
 const DashboardAnalytics = () => {
-  return (
-    <Grid container spacing={6}>
-        <AllComponentMui />
-    </Grid>
-  )
+  return <AllComponentMui />
 }
 
 export default DashboardAnalytics
