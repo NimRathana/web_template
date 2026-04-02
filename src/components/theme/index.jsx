@@ -8,7 +8,6 @@ import ModeChanger from './ModeChanger'
 import { useSettings } from '@core/hooks/useSettings'
 import defaultCoreTheme from '@core/theme'
 import primaryColorConfig from '@configs/primaryColorConfig'
-import themeConfig from '@configs/themeConfig'
 
 const CustomThemeProvider = ({ children, direction }) => {
   const { settings } = useSettings()

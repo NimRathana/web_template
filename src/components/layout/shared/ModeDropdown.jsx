@@ -79,6 +79,7 @@ const ModeDropdown = () => {
         <IconButton
           ref={anchorRef}
           onClick={handleMenuOpen}
+          size="large"
           sx={{
             color: "text.primary",
             transition: "transform 0.3s ease-in-out",

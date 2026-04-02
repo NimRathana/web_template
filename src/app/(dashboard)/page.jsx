@@ -2,14 +2,12 @@
 import Grid from '@mui/material/Grid'
 
 // Components Imports
-import Table from '@views/dashboard/Table'
+import AllComponentMui from '@views/dashboard'
 
 const DashboardAnalytics = () => {
   return (
     <Grid container spacing={6}>
-      <Grid size={{ xs: 12 }}>
-        <Table />
-      </Grid>
+        <AllComponentMui />
     </Grid>
   )
 }

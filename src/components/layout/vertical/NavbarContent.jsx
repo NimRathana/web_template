@@ -22,7 +22,13 @@ const NavbarContent = () => {
       </div>
       <div className='flex items-center'>
         <ModeDropdown />
-        <IconButton className='text-textPrimary'>
+        <IconButton 
+          sx={{
+            color: "text.primary",
+            transition: "transform 0.3s ease-in-out",
+            mr: 2,
+            "&:hover": { transform: "rotate(15deg)" },
+          }}>
           <i className='ri-notification-2-line' />
         </IconButton>
         <UserDropdown />
