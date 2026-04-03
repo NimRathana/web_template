@@ -12,6 +12,8 @@ import primaryColorConfig from '@configs/primaryColorConfig'
 import createCache from '@emotion/cache';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { prefixer } from 'stylis';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '@configs/i18n';
 
 const CustomThemeProvider = ({ children }) => {
   const { settings } = useSettings()
@@ -69,7 +71,9 @@ const CustomThemeProvider = ({ children }) => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <ModeChanger />
-          {!loading && children}
+          <I18nextProvider i18n={i18n}>
+            {!loading && children}
+          </I18nextProvider>
         </ThemeProvider>
       </CacheProvider>
     </AppRouterCacheProvider>

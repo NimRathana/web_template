@@ -1,5 +1,5 @@
 // Next Imports
-import { Inter } from 'next/font/google'
+import { Inter, Noto_Sans_Khmer  } from 'next/font/google'
 
 // Theme Options Imports
 import overrides from './overrides'
@@ -10,6 +10,7 @@ import customShadows from './customShadows'
 import typography from './typography'
 
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700', '800', '900'] })
+const khmer = Noto_Sans_Khmer({ weight: ['400','700'], display: 'swap' })
 
 const theme = (mode, direction, skin) => {
   return {
@@ -28,7 +29,7 @@ const theme = (mode, direction, skin) => {
       }
     },
     shadows: shadows(mode),
-    typography: typography(inter.style.fontFamily),
+    typography: typography(khmer.style.fontFamily),
     customShadows: customShadows(mode),
     mainColorChannels: {
       light: '46 38 61',

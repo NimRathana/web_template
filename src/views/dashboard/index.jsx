@@ -84,6 +84,7 @@ import {
 
 } from '@mui/icons-material';
 import { useSettings } from '@core/hooks/useSettings';
+import { useTranslation } from 'react-i18next';
 
 const MaterioStyleDemo = () => {
   const [tabValue, setTabValue] = React.useState(0);
@@ -96,6 +97,7 @@ const MaterioStyleDemo = () => {
   const [toggleAlignment, setToggleAlignment] = React.useState('center');
   const { settings } = useSettings();
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const primaryColor = settings.primaryColor || theme.palette.primary.main;
 
@@ -230,7 +232,7 @@ const MaterioStyleDemo = () => {
             <CardHeader title="Profile Overview" titleTypographyProps={{ variant: 'h6', fontWeight: 600 }} />
             <CardContent sx={{ textAlign: 'center', pt: 3 }}>
               <Avatar sx={{ width: 110, height: 110, mx: 'auto', bgcolor: primaryColor, fontSize: 44, fontWeight: 700 }}>BRO</Avatar>
-              <Typography variant="h6" sx={{ mt: 3 }}>Hi, BRO 👋</Typography>
+              <Typography variant="h6" sx={{ mt: 3 }}>{t('welcome')}, BRO 👋</Typography>
               <Typography color="text.secondary">Premium User • Level 12</Typography>
 
               <Stack direction="row" justifyContent="center" spacing={5} sx={{ mt: 6 }}>
