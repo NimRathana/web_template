@@ -4,7 +4,7 @@ import CustomThemeProvider from './theme'
 import { getMode, getSettingsFromCookie } from '@core/utils/serverHelpers'
 
 const Providers = async props => {
-  const { children, direction } = props
+  const { children } = props
 
   const mode = await getMode()
   const settingsCookie = await getSettingsFromCookie()
@@ -12,7 +12,7 @@ const Providers = async props => {
   return (
     <VerticalNavProvider>
       <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
-        <CustomThemeProvider direction={direction}>
+        <CustomThemeProvider>
           {children}
         </CustomThemeProvider>
       </SettingsProvider>
