@@ -1,108 +1,102 @@
-// MUI Imports
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Divider from '@mui/material/Divider';
+'use client'
+
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar'
+import IconButton from '@mui/material/IconButton'
+import Divider from '@mui/material/Divider'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
 
 const CardFacebook = () => {
   return (
-    <Card 
-      sx={{ 
-        overflow: 'hidden',
-      }}
-    >
-      {/* Header - User Info + Facebook Logo */}
-      <CardContent sx={{ pb: 1 }}>
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-3">
-            <Avatar 
-              src="/images/avatars/1.png" 
-              sx={{ width: 48, height: 48, marginRight: 3 }}
-            />
-            <div>
-              <Typography variant="subtitle1" fontWeight={600} sx={{ lineHeight: 1.2 }}>
+    <Card sx={{ overflow: 'hidden' }}>
+      <CardContent>
+
+        {/* Header */}
+        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
+          
+          {/* User Info */}
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar src="/images/avatars/1.png" sx={{ width: 48, height: 48 }} />
+
+            <Box>
+              <Typography variant="subtitle1" fontWeight={600}>
                 Eugene Clarke
               </Typography>
               <Typography variant="caption" color="text.secondary">
                 2h • 🌍 Public
               </Typography>
-            </div>
-          </div>
+            </Box>
+          </Stack>
 
-          <div className="flex items-center gap-1 text-[#1877F2]">
-            <i className="ri-facebook-fill text-3xl" />
-            <IconButton size="small" sx={{ color: 'text.secondary' }}>
+          {/* Actions */}
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <i className="ri-facebook-fill text-3xl text-[#1877F2]" />
+            <IconButton size="small">
               <i className="ri-more-fill text-2xl" />
             </IconButton>
-          </div>
-        </div>
+          </Stack>
+        </Stack>
 
-        {/* Post Text */}
-        <Typography 
-          variant="body1" 
-          sx={{ 
-            my: 3, 
-            lineHeight: 1.5,
-            fontSize: '1.02rem',
-            color: 'text.primary'
-          }}
-        >
-          You've read about the importance of being courageous, rebellious and imaginative. 
-          These are all vital ingredients in an effective leader.
+        {/* Text */}
+        <Typography sx={{ my: 3 }}>
+          You've read about the importance of being courageous, rebellious and imaginative.
         </Typography>
 
-        {/* Fake Image / Media Area (makes it way more beautiful) */}
-        <div className="rounded-2xl overflow-hidden bg-gray-100 mb-4 -mx-4">
-          <img 
-            src="https://picsum.photos/id/1015/600/340" 
-            alt="Post media"
-            className="w-full h-auto object-cover"
-            style={{ maxHeight: '340px' }}
+        {/* Image */}
+        <Box sx={{ mb: 4 }}>
+          <img
+            src="https://picsum.photos/id/1015/600/340"
+            style={{ width: '100%', borderRadius: 12 }}
           />
-        </div>
+        </Box>
 
-        {/* Reaction Stats */}
-        <div className="flex items-center justify-between text-sm mb-2">
-          <div className="flex items-center gap-1">
-            <div className="flex -space-x-1">
-              <span className="text-lg">👍</span>
-              <span className="text-lg">❤️</span>
-            </div>
-            <Typography variant="body2" color="text.secondary">
-              2.5K
-            </Typography>
-          </div>
+        {/* Reactions */}
+        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+          
+          <Stack direction="row" spacing={1}>
+            <Stack
+              direction="row"
+              sx={{
+                '& > *:not(:first-of-type)': {
+                  marginInlineStart: -0.5 // ✅ auto RTL safe
+                }
+              }}
+            >
+              <span>👍</span>
+              <span>❤️</span>
+            </Stack>
 
-          <div className="flex items-center gap-4">
+            <Typography variant="body2">2.5K</Typography>
+          </Stack>
+
+          <Stack direction="row" spacing={3}>
             <Typography variant="body2">124 Comments</Typography>
             <Typography variant="body2">89 Shares</Typography>
-          </div>
-        </div>
+          </Stack>
+        </Stack>
 
-        <Divider sx={{ my: 1 }} />
+        <Divider />
 
-        {/* Action Buttons - Like, Comment, Share */}
-        <div className="flex justify-around pt-1">
-          <IconButton color="inherit" sx={{ flex: 1, borderRadius: 2, gap: 1 }}>
-            <i className="ri-thumb-up-line text-2xl" />
-            <Typography variant="body2" fontWeight={500}>Like</Typography>
-          </IconButton>
+        {/* Actions */}
+        <Stack direction="row" justifyContent="space-around" mt={1}>
+          <ActionButton icon="ri-thumb-up-line" label="Like" />
+          <ActionButton icon="ri-chat-3-line" label="Comment" />
+          <ActionButton icon="ri-share-line" label="Share" />
+        </Stack>
 
-          <IconButton color="inherit" sx={{ flex: 1, borderRadius: 2, gap: 1 }}>
-            <i className="ri-chat-3-line text-2xl" />
-            <Typography variant="body2" fontWeight={500}>Comment</Typography>
-          </IconButton>
-
-          <IconButton color="inherit" sx={{ flex: 1, borderRadius: 2, gap: 1 }}>
-            <i className="ri-share-line text-2xl" />
-            <Typography variant="body2" fontWeight={500}>Share</Typography>
-          </IconButton>
-        </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default CardFacebook;
+const ActionButton = ({ icon, label }) => (
+  <IconButton sx={{ flex: 1, borderRadius: 2, gap: 1 }}>
+    <i className={`${icon} text-2xl`} />
+    <Typography variant="body2">{label}</Typography>
+  </IconButton>
+)
+
+export default CardFacebook
