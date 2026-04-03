@@ -13,7 +13,6 @@ const StyledFooter = styled.footer`
 
   & .${verticalLayoutClasses.footerContentWrapper} {
     padding-block: 15px;
-    padding-inline: ${themeConfig.layoutPadding}px;
   }
 
   ${({ overrideStyles }) => overrideStyles}

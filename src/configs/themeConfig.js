@@ -24,8 +24,8 @@ const themeConfig = {
   navbar: {
     type: 'fixed',
     contentWidth: 'compact',
-    floating: false,
-    detached: true,
+    floating: true, // Navbar overlays content slightly (like a floating card) and may have increased border-radius for a more modern look
+    detached: true, 
     blur: true
   },
   contentWidth: 'compact',
