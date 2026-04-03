@@ -6,6 +6,7 @@ import themeConfig from '@configs/themeConfig'
 
 const StyledMain = styled.main`
   padding-block: ${themeConfig.layoutPadding}px;
+  padding-inline: ${({ isContentCompact }) => isContentCompact ? '0' : `${themeConfig.layoutPadding}px`};
   ${({ isContentCompact }) =>
     isContentCompact &&
     `

@@ -14,6 +14,7 @@ const StyledHeader = styled.header`
   inline-size: 100%;
   flex-shrink: 0;
   min-block-size: var(--header-height);
+  padding-inline: ${({ scrolled, isContentCompact }) => scrolled ? `${themeConfig.layoutPadding}px` : isContentCompact ? '0' : `${themeConfig.layoutPadding}px`};
 
   .${verticalLayoutClasses.navbar} {
     position: relative;
