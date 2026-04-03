@@ -14,7 +14,9 @@ const StyledHeader = styled.header`
   inline-size: 100%;
   flex-shrink: 0;
   min-block-size: var(--header-height);
-  padding-inline: ${({ scrolled, isContentCompact }) => scrolled ? `${themeConfig.layoutPadding}px` : isContentCompact ? '0' : `${themeConfig.layoutPadding}px`};
+  padding-inline: ${({ scrolled }) => scrolled ? `${themeConfig.layoutPadding}px` : `${themeConfig.layoutPadding}px`};
+  max-inline-size: ${({ isContentCompact }) => isContentCompact ? `${themeConfig.compactContentWidth}px` : '100%'};
+  margin-inline: auto;
 
   .${verticalLayoutClasses.navbar} {
     position: relative;
@@ -22,7 +24,6 @@ const StyledHeader = styled.header`
     padding-inline:  ${({ scrolled }) => scrolled ? `${themeConfig.layoutPadding}px` : '0'};
     inline-size: 100%;
     margin-inline: auto;
-    max-inline-size: ${({ isContentCompact }) => isContentCompact ? `${themeConfig.compactContentWidth}px` : '100%'};
     transition: all 0.3s ease;
     background-color: ${({ scrolled, isBlur }) => scrolled ? isBlur ? 'rgb(var(--mui-palette-background-paperChannel) / 0.8)' : 'rgb(var(--mui-palette-background-paperChannel))' : 'transparent'};
     backdrop-filter: ${({ scrolled, isBlur }) => scrolled && isBlur ? 'blur(20px)' : 'none'};
