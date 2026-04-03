@@ -13,6 +13,10 @@ const CustomThemeProvider = ({ children }) => {
   const { settings } = useSettings()
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    document.documentElement.setAttribute('dir', settings.direction || 'ltr')
+  }, [settings.direction])
+
   const theme = useMemo(() => {
     const coreTheme = defaultCoreTheme(settings.mode || 'light', settings.direction || 'ltr', settings.skin || 'default')
     const mainColor = settings.primaryColor || primaryColorConfig[0].main
