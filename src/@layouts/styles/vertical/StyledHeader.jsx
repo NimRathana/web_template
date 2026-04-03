@@ -23,7 +23,7 @@ const StyledHeader = styled.header`
     margin-inline: auto;
     max-inline-size: ${({ isContentCompact }) => isContentCompact ? `${themeConfig.compactContentWidth}px` : '100%'};
     transition: all 0.3s ease;
-    background-color: ${({ scrolled }) => scrolled ? 'rgb(var(--mui-palette-background-paperChannel) / 0.8)' : 'transparent'};
+    background-color: ${({ scrolled, isBlur }) => scrolled ? isBlur ? 'rgb(var(--mui-palette-background-paperChannel) / 0.8)' : 'rgb(var(--mui-palette-background-paperChannel))' : 'transparent'};
     backdrop-filter: ${({ scrolled, isBlur }) => scrolled && isBlur ? 'blur(20px)' : 'none'};
     border: ${({ skin, scrolled }) => scrolled && skin === 'bordered' ? '1px solid var(--mui-palette-divider)' : 'none'};
     box-shadow: ${({ skin, scrolled }) => scrolled && skin !== 'bordered' ? 'var(--mui-customShadows-md)' : 'none'};
