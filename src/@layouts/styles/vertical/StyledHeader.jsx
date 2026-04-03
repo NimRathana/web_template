@@ -21,7 +21,7 @@ const StyledHeader = styled.header`
     padding-inline: ${themeConfig.layoutPadding}px;
     inline-size: 100%;
     margin-inline: auto;
-    max-inline-size: ${themeConfig.compactContentWidth}px;
+    max-inline-size: ${({ isContentCompact }) => isContentCompact ? `${themeConfig.compactContentWidth}px` : '100%'};
   }
 
   ${({ overrideStyles }) => overrideStyles}

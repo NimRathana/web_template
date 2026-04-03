@@ -9,7 +9,7 @@ import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
 
 const StyledFooter = styled.footer`
   margin-inline: auto;
-  max-inline-size: ${themeConfig.compactContentWidth}px;
+  max-inline-size: ${({ isContentCompact }) => isContentCompact ? `${themeConfig.compactContentWidth}px` : '100%'};
 
   & .${verticalLayoutClasses.footerContentWrapper} {
     padding-block: 15px;

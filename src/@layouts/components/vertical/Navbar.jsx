@@ -1,21 +1,19 @@
 'use client'
 
-// Third-party Imports
 import classnames from 'classnames'
-
-// Util Imports
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
-
-// Styled Component Imports
 import StyledHeader from '@layouts/styles/vertical/StyledHeader'
+import { useSettings } from '@core/hooks/useSettings'
 
 const Navbar = props => {
-  // Props
   const { children, overrideStyles } = props
+  const { settings } = useSettings()
+  const isContentCompact = settings.contentWidth === 'compact'
 
   return (
     <StyledHeader
       overrideStyles={overrideStyles}
+      isContentCompact={isContentCompact}
       className={classnames(
         verticalLayoutClasses.header,
         verticalLayoutClasses.headerContentCompact,

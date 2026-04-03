@@ -1,21 +1,19 @@
 'use client'
 
-// Third-party Imports
 import classnames from 'classnames'
-
-// Util Imports
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
-
-// Styled Component Imports
 import StyledFooter from '@layouts/styles/vertical/StyledFooter'
+import { useSettings } from '@core/hooks/useSettings'
 
 const Footer = props => {
-  // Props
   const { children, overrideStyles } = props
+  const { settings } = useSettings()
+  const isContentCompact = settings.contentWidth === 'compact'
 
   return (
     <StyledFooter
       overrideStyles={overrideStyles}
+      isContentCompact={isContentCompact}
       className={classnames(
         verticalLayoutClasses.footer,
         verticalLayoutClasses.footerContentCompact,
