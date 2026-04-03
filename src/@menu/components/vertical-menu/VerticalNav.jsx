@@ -34,6 +34,7 @@ const VerticalNav = props => {
     className,
     customStyles,
     children,
+    collapsed,
     ...rest
   } = props
 
@@ -75,6 +76,7 @@ const VerticalNav = props => {
   return (
     <StyledVerticalNav
       width={width}
+      isCollapsed={collapsed}
       isBreakpointReached={isBreakpointReachedContext}
       customStyles={customStyles}
       transitionDuration={transitionDurationContext}

@@ -43,6 +43,10 @@ const Navigation = () => {
   const { isBreakpointReached, toggleVerticalNav } = useVerticalNav()
   const { settings } = useSettings()
 
+  if (settings.layout === 'horizontal') {
+    return null
+  }
+
   // Refs
   const shadowRef = useRef(null)
 
@@ -64,7 +68,7 @@ const Navigation = () => {
   return (
     // eslint-disable-next-line lines-around-comment
     // Sidebar Vertical Menu
-    <VerticalNav customStyles={navigationCustomStyles(theme, settings.skin)}>
+    <VerticalNav collapsed={settings.layout === 'collapsed'} customStyles={navigationCustomStyles(theme, settings.skin)}>
       {/* Nav Header including Logo & nav toggle icons  */}
       <NavHeader>
         <Link href='/'>
