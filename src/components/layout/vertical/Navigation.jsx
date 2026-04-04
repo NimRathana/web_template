@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Radio } from '@mui/material'
 import Link from '@/components/Link'
 import { styled, useTheme } from '@mui/material/styles'
@@ -11,6 +11,8 @@ import Logo from '@components/layout/shared/Logo'
 import useVerticalNav from '@menu/hooks/useVerticalNav'
 import navigationCustomStyles from '@core/styles/vertical/navigationCustomStyles'
 import { useSettings } from '@core/hooks/useSettings'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 
 const StyledBoxForShadow = styled('div')(({ theme }) => ({
   top: 60,
@@ -31,7 +33,7 @@ const StyledBoxForShadow = styled('div')(({ theme }) => ({
 const Navigation = () => {
   // Hooks
   const theme = useTheme()
-  const { isBreakpointReached, toggleVerticalNav, isCollapsed, toggleCollapse } = useVerticalNav()
+  const { isBreakpointReached, toggleVerticalNav, toggleCollapse } = useVerticalNav()
   const { settings, updateSettings } = useSettings()
 
   // Refs
@@ -58,7 +60,6 @@ const Navigation = () => {
     } else if (settings.layout === 'vertical') {
       toggleCollapse(false)
     }
-    // No need to handle 'horizontal' here, as Navigation will return null
   }, [settings.layout, toggleCollapse])
 
   // If horizontal, don't render vertical menu
@@ -74,12 +75,23 @@ const Navigation = () => {
           <Logo />
         </Link>
         {!isBreakpointReached && (
-          <Radio
-            checked={Boolean(isCollapsed)}
-            onChange={() =>
-              updateSettings({ layout: isCollapsed ? 'vertical' : 'collapsed' })
-            }
-          />
+          <span
+            role="button"
+            tabIndex={0}
+            style={{ display: 'flex', cursor: 'pointer', alignItems: 'center' }}
+            onClick={() => {
+              const newLayout = settings.layout === 'vertical' ? 'collapsed' : 'vertical'
+              updateSettings({ layout: newLayout })
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                const newLayout = settings.layout === 'vertical' ? 'collapsed' : 'vertical'
+                updateSettings({ layout: newLayout })
+              }
+            }}
+          >
+            {settings.layout === 'vertical' ? <RadioButtonCheckedIcon fontSize="small" /> : <RadioButtonUncheckedIcon fontSize="small" />}
+          </span>
         )}
         {isBreakpointReached && <i className='ri-close-line text-xl' onClick={() => toggleVerticalNav(false)} />}
       </NavHeader>
