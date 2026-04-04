@@ -20,7 +20,14 @@ export const VerticalNavProvider = ({ children }) => {
   const toggleVerticalNav = useCallback(value => {
     setVerticalNavState(prevState => ({
       ...prevState,
-      isToggled: value !== undefined ? Boolean(value) : !Boolean(prevState?.isToggled)
+      isToggled: value !== undefined ? Boolean(value) : !Boolean(prevState?.isToggled),
+    }))
+  }, [])
+
+  const toggleCollapse = useCallback((value) => {
+    setVerticalNavState(prev => ({
+      ...prev,
+      isCollapsed: value !== undefined ? Boolean(value) : !Boolean(prev?.isCollapsed)
     }))
   }, [])
 
@@ -28,9 +35,10 @@ export const VerticalNavProvider = ({ children }) => {
     () => ({
       ...verticalNavState,
       updateVerticalNavState,
-      toggleVerticalNav
+      toggleVerticalNav,
+      toggleCollapse
     }),
-    [verticalNavState, updateVerticalNavState, toggleVerticalNav]
+    [verticalNavState, updateVerticalNavState, toggleVerticalNav, toggleCollapse]
   )
 
   return <VerticalNavContext.Provider value={verticalNavProviderValue}>{children}</VerticalNavContext.Provider>

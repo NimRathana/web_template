@@ -85,6 +85,7 @@ import {
 } from '@mui/icons-material';
 import { useSettings } from '@core/hooks/useSettings';
 import { useTranslation } from 'react-i18next';
+import useVerticalNav from '@menu/hooks/useVerticalNav'
 
 const MaterioStyleDemo = () => {
   const [tabValue, setTabValue] = React.useState(0);
@@ -98,6 +99,7 @@ const MaterioStyleDemo = () => {
   const { settings } = useSettings();
   const theme = useTheme();
   const { t } = useTranslation();
+  const { isToggled, updateVerticalNavState } = useVerticalNav()
 
   const primaryColor = settings.primaryColor || theme.palette.primary.main;
 
@@ -187,10 +189,10 @@ const MaterioStyleDemo = () => {
                     <Typography variant="body2" color="text.secondary">100</Typography>
                   </Box>
                   <Stack direction="row" spacing={3} flexWrap="wrap" sx={{ mt: 4 }}>
-                    <Button variant="contained" startIcon={<AddIcon />} onClick={() => setDialogOpen(true)}>
+                    <Button variant="contained" startIcon={<AddIcon />} onClick={() => updateVerticalNavState({ isToggled: !isToggled })}>
                       Create New
                     </Button>
-                    <Button variant="outlined">
+                    <Button variant="outlined" onClick={() => setDialogOpen(true)}>
                       Preview Changes
                     </Button>
                     <Fab color="primary" size="medium" onClick={() => setDialogOpen(true)}>

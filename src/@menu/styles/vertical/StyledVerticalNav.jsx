@@ -16,8 +16,8 @@ const StyledVerticalNav = styled.aside`
   transition-timing-function: ease-in-out;
 
   /* Width & Min Width & Margin */
-  inline-size: ${({ width, isCollapsed }) => (isCollapsed ? '64px' : `${width}px`)};
-  min-inline-size: ${({ width, isCollapsed }) => (isCollapsed ? '64px' : `${width}px`)};
+  inline-size: ${({ width }) => `${width}px`};
+  min-inline-size: ${({ width }) => `${width}px`};
 
   /* Toggled */
   &.${verticalNavClasses.breakpointReached} {
@@ -37,17 +37,6 @@ const StyledVerticalNav = styled.aside`
     `
     &.${verticalNavClasses.toggled} {
       margin-inline-start: -${width}px;
-    }
-  `}
-
-  /* Hover expansion */
-  ${({ isCollapsed, width }) =>
-    isCollapsed &&
-    `
-    &:hover {
-      inline-size: ${width}px;
-      min-inline-size: ${width}px;
-      box-shadow: var(--mui-customShadows-lg);
     }
   `}
 
