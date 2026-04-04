@@ -2,22 +2,13 @@
 
 // React Imports
 import { useRef, useEffect } from 'react'
-
-// Next Imports
+import { Radio } from '@mui/material'
 import Link from '@/components/Link'
-
-// MUI Imports
 import { styled, useTheme } from '@mui/material/styles'
-
-// Component Imports
 import VerticalNav, { NavHeader } from '@menu/vertical-menu'
 import VerticalMenu from './VerticalMenu'
 import Logo from '@components/layout/shared/Logo'
-
-// Hook Imports
 import useVerticalNav from '@menu/hooks/useVerticalNav'
-
-// Style Imports
 import navigationCustomStyles from '@core/styles/vertical/navigationCustomStyles'
 import { useSettings } from '@core/hooks/useSettings'
 
@@ -41,7 +32,7 @@ const Navigation = () => {
   // Hooks
   const theme = useTheme()
   const { isBreakpointReached, toggleVerticalNav, isCollapsed, toggleCollapse } = useVerticalNav()
-  const { settings } = useSettings()
+  const { settings, updateSettings } = useSettings()
 
   // Refs
   const shadowRef = useRef(null)
@@ -83,11 +74,11 @@ const Navigation = () => {
           <Logo />
         </Link>
         {!isBreakpointReached && (
-          <i
-            className={isCollapsed ? 'ri-arrow-right-s-line text-xl' : 'ri-arrow-left-s-line text-xl'}
-            style={{ cursor: 'pointer' }}
-            onClick={() => toggleCollapse()}
-            title={isCollapsed ? 'Expand Menu' : 'Collapse Menu'}
+          <Radio
+            checked={Boolean(isCollapsed)}
+            onChange={() =>
+              updateSettings({ layout: isCollapsed ? 'vertical' : 'collapsed' })
+            }
           />
         )}
         {isBreakpointReached && <i className='ri-close-line text-xl' onClick={() => toggleVerticalNav(false)} />}
