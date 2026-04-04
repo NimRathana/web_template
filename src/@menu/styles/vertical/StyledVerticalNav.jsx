@@ -45,7 +45,7 @@ const StyledVerticalNav = styled.aside`
     `
     &:hover {
       inline-size: ${verticalWidth}px; 
-      min-inline-size: ${verticalWidth}px;a(255, 255, 255, 0.03);
+      min-inline-size: ${verticalWidth}px;
     }
   `}
 
