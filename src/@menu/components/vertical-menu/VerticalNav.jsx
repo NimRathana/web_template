@@ -26,6 +26,7 @@ const VerticalNav = props => {
   // Props
   const {
     width = 260,
+    collapsedWidth = 64,
     breakpoint = 'lg',
     customBreakpoint,
     breakpoints,
@@ -73,7 +74,6 @@ const VerticalNav = props => {
     updateVerticalNavState({ isToggled: false })
   }
 
-  const collapsedWidth = 64
   const finalWidth = isBreakpointReachedContext ? width : isCollapsed ? collapsedWidth : width
 
   return (
