@@ -29,7 +29,7 @@ const VerticalMenu = ({ scrollMenu }) => {
   // Hooks
   const theme = useTheme()
   const { settings } = useSettings()
-  const { isBreakpointReached, transitionDuration } = useVerticalNav()
+  const { isBreakpointReached, transitionDuration, isCollapsed } = useVerticalNav()
   const ScrollWrapper = isBreakpointReached ? 'div' : PerfectScrollbar
 
   return (
@@ -48,7 +48,7 @@ const VerticalMenu = ({ scrollMenu }) => {
     >
       {/* Vertical Menu */}
       <Menu
-        menuItemStyles={menuItemStyles(theme, settings.primaryColor)}
+        menuItemStyles={menuItemStyles(theme, settings.primaryColor, isCollapsed)}
         renderExpandIcon={({ open }) => <RenderExpandIcon open={open} transitionDuration={transitionDuration} />}
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(theme)}

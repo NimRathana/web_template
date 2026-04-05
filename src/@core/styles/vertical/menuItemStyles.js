@@ -4,7 +4,7 @@ import { lighten } from '@mui/material/styles'
 // Util Imports
 import { menuClasses } from '@menu/utils/menuClasses'
 
-const menuItemStyles = (theme, primaryColor) => {
+const menuItemStyles = (theme, primaryColor, isCollapsed) => {
   const mainColor = primaryColor || theme.palette.primary.main
   const lightColor = lighten(mainColor, 0.5)
   return {
@@ -34,12 +34,18 @@ const menuItemStyles = (theme, primaryColor) => {
     button: ({ active }) => ({
       paddingBlock: theme.spacing(2),
       '&:has(.MuiChip-root)': {
-        paddingBlock: theme.spacing(1.75)
+        paddingBlock: theme.spacing(0.75)
       },
-      paddingInlineStart: theme.spacing(5.5),
-      paddingInlineEnd: theme.spacing(3.5),
+      paddingInlineStart: isCollapsed ? theme.spacing(2) : theme.spacing(5.5),
+      paddingInlineEnd: isCollapsed ? theme.spacing(2) : theme.spacing(3.5),
+      justifyContent: isCollapsed ? 'center' : 'flex-start',
       borderStartEndRadius: 50,
       borderEndEndRadius: 50,
+      ...(isCollapsed && {
+        [`& .${menuClasses.label}`]: {
+          display: 'none'
+        }
+      }),
       ...(!active && {
         '&:hover, &:focus-visible': {
           backgroundColor: 'var(--mui-palette-action-hover)'
@@ -52,17 +58,17 @@ const menuItemStyles = (theme, primaryColor) => {
     icon: ({ level }) => ({
       ...(level === 0 && {
         fontSize: '1.375rem',
-        marginInlineEnd: theme.spacing(2)
       }),
       ...(level > 0 && {
         fontSize: '0.75rem',
         color: 'var(--mui-palette-text-secondary)',
-        marginInlineEnd: theme.spacing(3.5)
       }),
-      ...(level === 1 && {
+      marginInlineEnd: isCollapsed ? 0 : theme.spacing(level === 0 ? 2 : 3.5),
+      ...(level === 1 && !isCollapsed && {
         marginInlineStart: theme.spacing(1.5)
       }),
-      ...(level > 1 && {
+
+      ...(level > 1 && !isCollapsed && {
         marginInlineStart: theme.spacing(1.5 + 2.5 * (level - 1))
       }),
       '& > i, & > svg': {
@@ -70,21 +76,26 @@ const menuItemStyles = (theme, primaryColor) => {
       }
     }),
     prefix: {
-      marginInlineEnd: theme.spacing(2)
+      marginInlineEnd: theme.spacing(2),
+      ...(isCollapsed && { display: 'none' })
     },
     suffix: {
-      marginInlineStart: theme.spacing(2)
+      marginInlineStart: theme.spacing(2),
+      ...(isCollapsed && { display: 'none' })
     },
     subMenuExpandIcon: {
       fontSize: '1.375rem',
       marginInlineStart: theme.spacing(2),
       '& i, & svg': {
         fontSize: 'inherit'
-      }
+      },
+      ...(isCollapsed && {
+        display: 'none'
+      }),
     },
     subMenuContent: {
       backgroundColor: 'transparent'
-    }
+    },
   }
 }
 

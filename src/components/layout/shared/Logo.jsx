@@ -19,11 +19,11 @@ const LogoText = styled.span`
   margin-inline-start: 10px;
 `
 
-const Logo = ({ color }) => {
+const Logo = ({ color, isCollapsed = false }) => {
   return (
     <div className='flex items-center min-bs-[24px]'>
       <MaterioLogo className='text-[22px] text-primary' />
-      <LogoText color={color}>{themeConfig.templateName}</LogoText>
+      {!isCollapsed && <LogoText color={color}>{themeConfig.templateName}</LogoText>}
     </div>
   )
 }

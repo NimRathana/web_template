@@ -5,15 +5,16 @@ import styled from '@emotion/styled'
 import { verticalNavClasses } from '../../utils/menuClasses'
 
 const StyledNavHeader = styled.div`
-  padding: 15px;
-  padding-inline-start: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${props => (props.isCollapsed ? 'center' : 'space-between')};
+  transition: all 0.3s ease;
 `
 
-const NavHeader = ({ children }) => {
-  return <StyledNavHeader className={verticalNavClasses.header}>{children}</StyledNavHeader>
+const NavHeader = ({ children, isCollapsed = false }) => {
+  return <StyledNavHeader className={verticalNavClasses.header} isCollapsed={isCollapsed}>
+    {children}
+  </StyledNavHeader>
 }
 
 export default NavHeader

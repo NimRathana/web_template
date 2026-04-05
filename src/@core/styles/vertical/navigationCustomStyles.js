@@ -1,7 +1,7 @@
 // Util Imports
 import { menuClasses, verticalNavClasses } from '@menu/utils/menuClasses'
 
-const navigationCustomStyles = (theme, skin = 'default') => {
+const navigationCustomStyles = (theme, skin = 'default', isCollapsed = false) => {
   return {
     color: 'var(--mui-palette-text-primary)',
     zIndex: 'var(--drawer-z-index) !important',
@@ -10,7 +10,7 @@ const navigationCustomStyles = (theme, skin = 'default') => {
     },
     [`& .${verticalNavClasses.header}`]: {
       paddingBlock: theme.spacing(5),
-      paddingInline: theme.spacing(5.5, 4)
+      paddingInline: isCollapsed ? null : theme.spacing(5.5, 4)
     },
     [`& .${verticalNavClasses.container}`]: {
       transition: 'none',
@@ -21,7 +21,7 @@ const navigationCustomStyles = (theme, skin = 'default') => {
     },
     [`& .${menuClasses.root}`]: {
       paddingBlockEnd: theme.spacing(2),
-      paddingInlineEnd: theme.spacing(4)
+      paddingInlineEnd: isCollapsed ? theme.spacing(1) : theme.spacing(4),
     },
     [`& .${verticalNavClasses.backdrop}`]: {
       backgroundColor: 'var(--backdrop-color)'

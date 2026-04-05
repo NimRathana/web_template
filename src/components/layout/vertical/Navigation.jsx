@@ -32,7 +32,7 @@ const StyledBoxForShadow = styled('div')(({ theme }) => ({
 const Navigation = () => {
   // Hooks
   const theme = useTheme()
-  const { isBreakpointReached, toggleVerticalNav, toggleCollapse } = useVerticalNav()
+  const { isBreakpointReached, toggleVerticalNav, toggleCollapse, isCollapsed } = useVerticalNav()
   const { settings, updateSettings } = useSettings()
 
   // Refs
@@ -67,13 +67,13 @@ const Navigation = () => {
   return (
     // eslint-disable-next-line lines-around-comment
     // Sidebar Vertical Menu
-    <VerticalNav customBreakpoint='800px' collapsedWidth='64' customStyles={navigationCustomStyles(theme, settings.skin)}>
+    <VerticalNav customBreakpoint='800px' collapsedWidth='64' customStyles={navigationCustomStyles(theme, settings.skin, isCollapsed)}>
       {/* Nav Header including Logo & nav toggle icons  */}
-      <NavHeader>
+      <NavHeader isCollapsed={isCollapsed}>
         <Link href='/'>
-          <Logo />
+          <Logo isCollapsed={isCollapsed} />
         </Link>
-        {!isBreakpointReached && (
+        {!isBreakpointReached && !isCollapsed && (
           <span
             role="button"
             tabIndex={0}
