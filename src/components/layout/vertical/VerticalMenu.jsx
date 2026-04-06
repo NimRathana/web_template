@@ -1,23 +1,14 @@
 // MUI Imports
 import Chip from '@mui/material/Chip'
 import { useTheme } from '@mui/material/styles'
-
-// Third-party Imports
 import PerfectScrollbar from 'react-perfect-scrollbar'
-
-// Component Imports
 import { Menu, SubMenu, MenuItem, MenuSection } from '@menu/vertical-menu'
-
-// Hook Imports
 import useVerticalNav from '@menu/hooks/useVerticalNav'
-
-// Styled Component Imports
 import StyledVerticalNavExpandIcon from '@menu/styles/vertical/StyledVerticalNavExpandIcon'
-
-// Style Imports
 import menuItemStyles from '@core/styles/vertical/menuItemStyles'
 import menuSectionStyles from '@core/styles/vertical/menuSectionStyles'
 import { useSettings } from '@core/hooks/useSettings'
+import { MenuData } from '@data/navigation/MenuData'
 
 const RenderExpandIcon = ({ open, transitionDuration }) => (
   <StyledVerticalNavExpandIcon open={open} transitionDuration={transitionDuration}>
@@ -31,6 +22,40 @@ const VerticalMenu = ({ scrollMenu, isCollapsed }) => {
   const { settings } = useSettings()
   const { isBreakpointReached, transitionDuration } = useVerticalNav()
   const ScrollWrapper = isBreakpointReached ? 'div' : PerfectScrollbar
+
+  const renderMenuItems = (items, parentKey = '') =>
+    items.map((item, index) => {
+      const key = `${parentKey}-${item.label}-${index}`
+
+      if (item.type === 'section') {
+        return (
+          <MenuSection key={key} label={item.label}>
+            {renderMenuItems(item.children, key)}
+          </MenuSection>
+        )
+      }
+
+      if (item.type === 'submenu') {
+        return (
+          <SubMenu key={key} label={item.label} icon={item.icon} suffix={item.suffix}>
+            {renderMenuItems(item.children, key)}
+          </SubMenu>
+        )
+      }
+
+      return (
+        <MenuItem
+          key={key}
+          href={item.href}
+          target={item.target}
+          icon={item.icon}
+          suffix={item.suffix}
+          disabled={item.disabled}
+        >
+          {item.label}
+        </MenuItem>
+      )
+    })
 
   return (
     // eslint-disable-next-line lines-around-comment
@@ -54,55 +79,7 @@ const VerticalMenu = ({ scrollMenu, isCollapsed }) => {
         menuSectionStyles={menuSectionStyles(theme, isCollapsed)}
         isCollapsed={isCollapsed}
       >
-        <SubMenu
-          label='Dashboards'
-          icon={<i className='ri-home-smile-line' />}
-          suffix={<Chip label='2' size='small' color='error' />}
-        >
-          <MenuItem href='/account-settings'> CRM </MenuItem>
-          <MenuItem href='/'>Analytics</MenuItem>
-        </SubMenu>
-        
-        <MenuSection label='Apps & Pages'>
-          <MenuItem href='/account-settings' icon={<i className='ri-user-settings-line' />}>
-            Account Settings
-          </MenuItem>
-          <SubMenu label='Auth Pages' icon={<i className='ri-shield-keyhole-line' />}>
-            <MenuItem href='/login' target='_blank'>
-              Login
-            </MenuItem>
-            <MenuItem href='/register' target='_blank'>
-              Register
-            </MenuItem>
-            <MenuItem href='/forgot-password' target='_blank'>
-              Forgot Password
-            </MenuItem>
-          </SubMenu>
-          <MenuItem href='/card-basic' icon={<i className='ri-bar-chart-box-line' />}>
-            Cards
-          </MenuItem>
-        </MenuSection>
-        <MenuSection label='Forms & Tables'>
-          <MenuItem href='/form-layouts' icon={<i className='ri-layout-4-line' />}>
-            Form Layouts
-          </MenuItem>
-          <SubMenu label='Others' icon={<i className='ri-more-line' />}>
-            <MenuItem suffix={<Chip label='New' size='small' color='info' />}>Item With Badge</MenuItem>
-            <MenuItem
-              suffix={<i className='ri-external-link-line text-xl' />}
-            >
-              External Link
-            </MenuItem>
-            <SubMenu label='Menu Levels'>
-              <MenuItem>Menu Level 2</MenuItem>
-              <SubMenu label='Menu Level 2'>
-                <MenuItem>Menu Level 3</MenuItem>
-                <MenuItem>Menu Level 3</MenuItem>
-              </SubMenu>
-            </SubMenu>
-            <MenuItem disabled>Disabled Menu</MenuItem>
-          </SubMenu>
-        </MenuSection>
+        {renderMenuItems(MenuData)}
       </Menu>
     </ScrollWrapper>
   )

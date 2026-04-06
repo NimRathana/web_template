@@ -26,7 +26,8 @@
       "@menu/*": ["./src/@menu/*"],
       "@assets/*": ["./src/assets/*"],
       "@configs/*": ["./src/configs/*"],
-      "@views/*": ["./src/views/*"]
+      "@views/*": ["./src/views/*"],
+      "@data/*": ["./src/data/*"]
     }
   },
   "include": [
