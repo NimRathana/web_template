@@ -1,5 +1,4 @@
 // MUI Imports
-import Chip from '@mui/material/Chip'
 import { useTheme } from '@mui/material/styles'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Menu, SubMenu, MenuItem, MenuSection } from '@menu/vertical-menu'
