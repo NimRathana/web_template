@@ -36,6 +36,7 @@ const Menu = (props, ref) => {
     subMenuOpenBehavior = 'accordion', // accordion, collapse
     transitionDuration = verticalSubMenuToggleDuration,
     textTruncate = true,
+    isCollapsed,
     ...rest
   } = props
 
@@ -101,7 +102,8 @@ const Menu = (props, ref) => {
       openSubmenusRef,
       toggleOpenSubmenu,
       subMenuOpenBehavior,
-      textTruncate
+      textTruncate,
+      isCollapsed 
     }),
     [
       transitionDuration,

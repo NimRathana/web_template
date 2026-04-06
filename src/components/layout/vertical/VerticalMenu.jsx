@@ -25,11 +25,11 @@ const RenderExpandIcon = ({ open, transitionDuration }) => (
   </StyledVerticalNavExpandIcon>
 )
 
-const VerticalMenu = ({ scrollMenu }) => {
+const VerticalMenu = ({ scrollMenu, isCollapsed }) => {
   // Hooks
   const theme = useTheme()
   const { settings } = useSettings()
-  const { isBreakpointReached, transitionDuration, isCollapsed } = useVerticalNav()
+  const { isBreakpointReached, transitionDuration } = useVerticalNav()
   const ScrollWrapper = isBreakpointReached ? 'div' : PerfectScrollbar
 
   return (
@@ -51,7 +51,8 @@ const VerticalMenu = ({ scrollMenu }) => {
         menuItemStyles={menuItemStyles(theme, settings.primaryColor, isCollapsed)}
         renderExpandIcon={({ open }) => <RenderExpandIcon open={open} transitionDuration={transitionDuration} />}
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
-        menuSectionStyles={menuSectionStyles(theme)}
+        menuSectionStyles={menuSectionStyles(theme, isCollapsed)}
+        isCollapsed={isCollapsed}
       >
         <SubMenu
           label='Dashboards'

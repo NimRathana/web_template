@@ -13,7 +13,7 @@ const navigationCustomStyles = (theme, skin = 'default', isCollapsed = false) =>
       paddingInline: isCollapsed ? null : theme.spacing(5.5, 4)
     },
     [`& .${verticalNavClasses.container}`]: {
-      transition: 'none',
+      transition: 'width 0.2s ease',
       border: skin === 'bordered' ? '1px solid var(--mui-palette-divider)' : 'transparent',
       [`& .${verticalNavClasses.toggled}`]: {
         boxShadow: 'var(--mui-customShadows-lg)'

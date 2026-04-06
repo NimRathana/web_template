@@ -1,10 +1,10 @@
 // Util Imports
 import { menuClasses } from '@menu/utils/menuClasses'
 
-const menuSectionStyles = theme => {
+const menuSectionStyles = (theme, isCollapsed = true) => {
   return {
     root: {
-      marginBlockStart: theme.spacing(7),
+      marginBlockStart: isCollapsed ? theme.spacing(0) : theme.spacing(7),
       [`& .${menuClasses.menuSectionContent}`]: {
         color: 'var(--mui-palette-text-disabled)',
         paddingInline: '0 !important',
@@ -21,14 +21,15 @@ const menuSectionStyles = theme => {
           blockSize: 1,
           flexGrow: 1,
           backgroundColor: 'var(--mui-palette-divider)'
-        }
+        },
+        display: isCollapsed ? 'none !important' : 'flex',
       },
       [`& .${menuClasses.menuSectionLabel}`]: {
         flexGrow: 0,
         fontSize: '13px',
-        lineHeight: 1.38462
+        lineHeight: 1.38462,
       }
-    }
+    },
   }
 }
 

@@ -33,9 +33,6 @@ const menuItemStyles = (theme, primaryColor, isCollapsed) => {
     },
     button: ({ active }) => ({
       paddingBlock: theme.spacing(2),
-      '&:has(.MuiChip-root)': {
-        paddingBlock: theme.spacing(0.75)
-      },
       paddingInlineStart: isCollapsed ? theme.spacing(2) : theme.spacing(5.5),
       paddingInlineEnd: isCollapsed ? theme.spacing(2) : theme.spacing(3.5),
       justifyContent: isCollapsed ? 'center' : 'flex-start',

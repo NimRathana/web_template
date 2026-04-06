@@ -40,15 +40,6 @@ const StyledVerticalNav = styled.aside`
     }
   `}
 
-  ${({ verticalWidth, isCollapsed }) =>
-    isCollapsed &&
-    `
-    &:hover {
-      inline-size: ${verticalWidth}px; 
-      min-inline-size: ${verticalWidth}px;
-    }
-  `}
-
   /* User Styles */
   ${({ customStyles }) => customStyles}
 `

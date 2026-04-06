@@ -22,7 +22,7 @@ const LogoText = styled.span`
 const Logo = ({ color, isCollapsed = false }) => {
   return (
     <div className='flex items-center min-bs-[24px]'>
-      <MaterioLogo className='text-[22px] text-primary' />
+      <MaterioLogo style={{ color: color ?? 'var(--mui-palette-primary-main)' }} className='text-[22px]' />
       {!isCollapsed && <LogoText color={color}>{themeConfig.templateName}</LogoText>}
     </div>
   )

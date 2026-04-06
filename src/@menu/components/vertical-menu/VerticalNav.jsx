@@ -26,7 +26,6 @@ const VerticalNav = props => {
   // Props
   const {
     width = 260,
-    collapsedWidth = 64,
     breakpoint = 'lg',
     customBreakpoint,
     breakpoints,
@@ -47,8 +46,7 @@ const VerticalNav = props => {
     width: widthContext,
     isBreakpointReached: isBreakpointReachedContext,
     isToggled: isToggledContext,
-    transitionDuration: transitionDurationContext,
-    isCollapsed 
+    transitionDuration: transitionDurationContext
   } = useVerticalNav()
 
   // Find the breakpoint from which screen size responsive behavior should enable and if its reached or not
@@ -74,13 +72,9 @@ const VerticalNav = props => {
     updateVerticalNavState({ isToggled: false })
   }
 
-  const finalWidth = isBreakpointReachedContext ? width : isCollapsed ? collapsedWidth : width
-
   return (
     <StyledVerticalNav
-      width={finalWidth}
-      verticalWidth={width}
-      isCollapsed={isCollapsed}
+      width={width}
       isBreakpointReached={isBreakpointReachedContext}
       customStyles={customStyles}
       transitionDuration={transitionDurationContext}
@@ -95,7 +89,7 @@ const VerticalNav = props => {
       {...rest}
     >
       <StyledVerticalNavContainer
-        width={finalWidth}
+        width={widthContext}
         className={verticalNavClasses.container}
         transitionDuration={transitionDurationContext}
       >

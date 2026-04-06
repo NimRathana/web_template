@@ -106,6 +106,7 @@ const SubMenu = (props, ref) => {
     transitionDuration,
     openSubmenusRef,
     textTruncate,
+    isCollapsed
   } = useVerticalMenu();
 
   // Vars
@@ -190,7 +191,7 @@ const SubMenu = (props, ref) => {
   /* useEffect(() => {
       console.log(openSubmenu)
     }, [openSubmenu]) */
-  const submenuContent = (
+  const submenuContent = !isCollapsed && (
     <SubMenuContent
       ref={contentRef}
       transitionDuration={transitionDuration}

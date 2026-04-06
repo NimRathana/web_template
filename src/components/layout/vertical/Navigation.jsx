@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Link from '@/components/Link'
 import { styled, useTheme } from '@mui/material/styles'
 import VerticalNav, { NavHeader } from '@menu/vertical-menu'
@@ -37,6 +37,8 @@ const Navigation = () => {
 
   // Refs
   const shadowRef = useRef(null)
+  const [hovered, setHovered] = useState(false)
+  const effectiveCollapsed = isCollapsed && !hovered
 
   const scrollMenu = (container, isPerfectScrollbar) => {
     container = isBreakpointReached || !isPerfectScrollbar ? container.target : container
@@ -67,13 +69,19 @@ const Navigation = () => {
   return (
     // eslint-disable-next-line lines-around-comment
     // Sidebar Vertical Menu
-    <VerticalNav customBreakpoint='800px' collapsedWidth='64' customStyles={navigationCustomStyles(theme, settings.skin, isCollapsed)}>
+    <VerticalNav 
+      customBreakpoint='800px' 
+      width={effectiveCollapsed ? 64 : 260}
+      customStyles={navigationCustomStyles(theme, settings.skin, effectiveCollapsed)}
+      onMouseEnter={() => setHovered(isCollapsed)}
+      onMouseLeave={() => setHovered(false)}
+      >
       {/* Nav Header including Logo & nav toggle icons  */}
-      <NavHeader isCollapsed={isCollapsed}>
+      <NavHeader isCollapsed={effectiveCollapsed}>
         <Link href='/'>
-          <Logo isCollapsed={isCollapsed} />
+          <Logo isCollapsed={effectiveCollapsed} />
         </Link>
-        {!isBreakpointReached && !isCollapsed && (
+        {!isBreakpointReached && !effectiveCollapsed && (
           <span
             role="button"
             tabIndex={0}
@@ -95,7 +103,7 @@ const Navigation = () => {
         {isBreakpointReached && <i className='ri-close-line text-xl' onClick={() => toggleVerticalNav(false)} />}
       </NavHeader>
       <StyledBoxForShadow ref={shadowRef} />
-      <VerticalMenu scrollMenu={scrollMenu} />
+      <VerticalMenu scrollMenu={scrollMenu} isCollapsed={effectiveCollapsed} />
     </VerticalNav>
   )
 }
