@@ -16,12 +16,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # Remove caching if no lock file
-          # cache: npm
-          # cache-dependency-path: package-lock.json
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm install   # ✅ Use install instead of ci
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -31,4 +30,4 @@ jobs:
         with:
           github_token: ${{ secrets.GH_PAT }}
           publish_dir: ./out
-          publish_branch: develop
+          publish_branch: gh-pages
