@@ -1,3 +1,4 @@
+import themeConfig from '@configs/themeConfig'
 const colorSchemes = (skin = 'default') => {
   return {
     light: {
@@ -77,8 +78,8 @@ const colorSchemes = (skin = 'default') => {
         divider: `rgb(var(--mui-mainColorChannels-light) / 0.12)`,
         dividerChannel: 'var(--mui-mainColorChannels-light)',
         background: {
-          default: skin === 'bordered' ? '#FFFFFF' : '#F4F5FA',
-          paper: '#FFFFFF'
+          default: skin === 'bordered' ? themeConfig.backgroundLightBorder : themeConfig.backgroundLight,
+          paper: themeConfig.backgroundLightBorder
         },
         action: {
           active: `rgb(var(--mui-mainColorChannels-light) / 0.6)`,
@@ -236,8 +237,8 @@ const colorSchemes = (skin = 'default') => {
         divider: `rgb(var(--mui-mainColorChannels-dark) / 0.12)`,
         dividerChannel: 'var(--mui-mainColorChannels-dark)',
         background: {
-          default: skin === 'bordered' ? '#312D4B' : '#28243D',
-          paper: '#312D4B'
+          default: skin === 'bordered' ? themeConfig.backgroundDarkBorder : themeConfig.backgroundDark,
+          paper: themeConfig.backgroundDarkBorder
         },
         action: {
           active: `rgb(var(--mui-mainColorChannels-dark) / 0.6)`,

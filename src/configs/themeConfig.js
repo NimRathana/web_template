@@ -17,6 +17,10 @@ const themeConfig = {
   layoutPadding: 24, // Common padding for header, content, footer layout components (in px)
   compactContentWidth: 1440, // in px
   disableRipple: false, // true, false
+  backgroundDark: '#28243D',
+  backgroundDarkBorder: '#312D4B',
+  backgroundLight: '#F4F5FA',
+  backgroundLightBorder: '#FFFFFF',
   homePageUrl: '/dashboards',
   skin: 'default',
   semiDark: false,
