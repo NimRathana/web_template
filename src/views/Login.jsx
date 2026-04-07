@@ -18,6 +18,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
+import { Box } from '@mui/material'
 
 // Component Imports
 import Logo from '@components/layout/shared/Logo'
@@ -48,71 +49,112 @@ const Login = ({ mode }) => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center min-bs-[100dvh] relative p-6'>
-      <Card className='flex flex-col sm:is-[450px]'>
-        <CardContent className='p-6 sm:!p-12'>
-          <Link href='/' className='flex justify-center items-center mbe-6'>
-            <Logo />
-          </Link>
-          <div className='flex flex-col gap-5'>
-            <div>
-              <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography>
-              <Typography className='mbs-1'>Please sign-in to your account and start the adventure</Typography>
-            </div>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit} className='flex flex-col gap-5'>
-              <TextField autoFocus fullWidth label='Email' />
+    <div className='flex flex-col justify-center items-center' style={{ minHeight: '100vh', position: 'relative', padding: 24 }}>
+      <Card className='flex flex-col sm:w-[450px]'>
+        <CardContent sx={{ p: { xs: 6, sm: 12 } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 6 }}>
+            <Link href='/'>
+              <Logo />
+            </Link>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <Box>
+              <Typography variant="h4">{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography>
+              <Typography sx={{ mb: 1 }}>
+                Please sign-in to your account and start the adventure
+              </Typography>
+            </Box>
+
+            <Box
+              component="form"
+              noValidate
+              autoComplete="off"
+              onSubmit={handleSubmit}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}
+            >
+              <TextField autoFocus fullWidth label="Email" />
+
               <TextField
                 fullWidth
-                label='Password'
-                id='outlined-adornment-password'
+                label="Password"
+                id="outlined-adornment-password"
                 type={isPasswordShown ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
-                        size='small'
-                        edge='end'
+                        size="small"
+                        edge="end"
                         onClick={handleClickShowPassword}
                         onMouseDown={e => e.preventDefault()}
                       >
                         <i className={isPasswordShown ? 'ri-eye-off-line' : 'ri-eye-line'} />
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
-              <div className='flex justify-between items-center gap-x-3 gap-y-1 flex-wrap'>
-                <FormControlLabel control={<Checkbox />} label='Remember me' />
-                <Typography className='text-end' color='primary' component={Link} href='/forgot-password'>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: 1,
+                  flexWrap: 'wrap',
+                }}
+              >
+                <FormControlLabel control={<Checkbox />} label="Remember me" />
+                <Typography
+                  sx={{ textAlign: 'right', color: 'primary.main', cursor: 'pointer' }}
+                  component={Link}
+                  href="/forgot-password"
+                >
                   Forgot password?
                 </Typography>
-              </div>
-              <Button fullWidth variant='contained' type='submit'>
+              </Box>
+
+              <Button fullWidth variant="contained" type="submit">
                 Log In
               </Button>
-              <div className='flex justify-center items-center flex-wrap gap-2'>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: 2,
+                }}
+              >
                 <Typography>New on our platform?</Typography>
-                <Typography component={Link} href='/register' color='primary'>
+                <Typography
+                  component={Link}
+                  href="/register"
+                  sx={{ color: 'primary.main', cursor: 'pointer' }}
+                >
                   Create an account
                 </Typography>
-              </div>
-              <Divider className='gap-3'>or</Divider>
-              <div className='flex justify-center items-center gap-2'>
-                <IconButton size='small' className='text-facebook'>
-                  <i className='ri-facebook-fill' />
+              </Box>
+
+              <Divider>or</Divider>
+
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+                <IconButton sx={{ color: '#4267B2' }}>
+                  <i className="ri-facebook-fill" />
                 </IconButton>
-                <IconButton size='small' className='text-twitter'>
-                  <i className='ri-twitter-fill' />
+                <IconButton sx={{ color: '#1DA1F2' }}>
+                  <i className="ri-twitter-fill" />
                 </IconButton>
-                <IconButton size='small' className='text-github'>
-                  <i className='ri-github-fill' />
+                <IconButton>
+                  <i className="ri-github-fill" />
                 </IconButton>
-                <IconButton size='small' className='text-googlePlus'>
-                  <i className='ri-google-fill' />
+                <IconButton sx={{ color: '#DB4437' }}>
+                  <i className="ri-google-fill" />
                 </IconButton>
-              </div>
-            </form>
-          </div>
+              </Box>
+            </Box>
+          </Box>
         </CardContent>
       </Card>
       <Illustrations maskImg={{ src: authBackground }} />

@@ -6,6 +6,7 @@ import Link from '@/components/Link'
 // MUI Imports
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 // Component Imports
 import Illustrations from '@components/Illustrations'
@@ -22,24 +23,55 @@ const NotFound = ({ mode }) => {
   const miscBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (
-    <div className='flex items-center justify-center min-bs-[100dvh] relative p-6 overflow-x-hidden'>
-      <div className='flex items-center flex-col text-center gap-10'>
-        <div className='flex flex-col gap-2 is-[90vw] sm:is-[unset]'>
-          <Typography className='font-medium text-8xl' color='text.primary'>
+    <div className="flex items-center justify-center min-h-[100dvh] relative overflow-x-hidden">
+      <div className="flex flex-col items-center text-center gap:6 md:gap-10">
+        <div className="flex flex-col">
+          <Typography
+            color="text.primary"
+            sx={{
+              fontSize: { xs: '3rem', sm: '4rem', md: '5rem', lg: '6rem' },
+              fontWeight: 600,
+              lineHeight: 1,
+            }}
+          >
             404
           </Typography>
-          <Typography variant='h4'>Page Not Found ⚠️</Typography>
-          <Typography>We couldn&#39;t find the page you are looking for.</Typography>
+          <Typography
+            variant="h4"
+            color="text.primary"
+            sx={{ fontWeight: 500 }}
+          >
+            Page Not Found ⚠️
+          </Typography>
+          <Typography sx={{ lineHeight: 2 }}>
+            We couldn't find the page you are looking for.
+          </Typography>
         </div>
-        <img
-          alt='error-illustration'
-          src='/images/illustrations/characters/5.png'
-          className='object-cover bs-[400px] md:bs-[450px] lg:bs-[500px]'
+
+        <Box
+          component="img"
+          src="/images/illustrations/characters/5.png"
+          alt="error-illustration"
+          sx={{
+            width: '100%',
+            maxWidth: { xs: 550, md: 700, lg: 800 },
+            height: 'auto',
+            objectFit: 'contain',
+            mt: { xs: 3, md: 5 },
+          }}
         />
-        <Button href='/' component={Link} variant='contained'>
+
+        <Button
+          href="/"
+          component={Link}
+          variant="contained"
+          sx={{ my: { xs: 3, md: 5 } }}
+        >
           Back to Home
         </Button>
       </div>
+
+      {/* Background Mask */}
       <Illustrations maskImg={{ src: miscBackground }} />
     </div>
   )

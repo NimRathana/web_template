@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 // Component Imports
 import Form from '@components/Form'
@@ -28,34 +29,54 @@ const ForgotPassword = ({ mode }) => {
   const authBackground = useImageVariant(mode, lightImg, darkImg)
 
   return (
-    <div className='flex flex-col justify-center items-center min-bs-[100dvh] relative p-6'>
-      <Card className='flex flex-col sm:is-[450px]'>
-        <CardContent className='p-6 sm:!p-12'>
-          <Link href='/' className='flex justify-center items-center mbe-6'>
-            <Logo />
-          </Link>
-          <Typography variant='h4'>Forgot Password 🔒</Typography>
-          <div className='flex flex-col gap-5'>
-            <Typography className='mbs-1'>
-              Enter your email and we&#39;ll send you instructions to reset your password
-            </Typography>
-            <Form noValidate autoComplete='off' className='flex flex-col gap-5'>
-              <TextField autoFocus fullWidth label='Email' />
-              <Button fullWidth variant='contained' type='submit'>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        position: 'relative',
+        p: 6
+      }}
+    >
+      <Card sx={{ display: 'flex', flexDirection: 'column', width: { sm: 450 } }}>
+        <CardContent sx={{ p: { xs: 6, sm: 12 } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 6 }}>
+            <Link href='/'>
+              <Logo />
+            </Link>
+          </Box>
+
+          <Typography variant="h4" sx={{ mb: 2 }}>
+            Forgot Password 🔒
+          </Typography>
+
+          <Typography sx={{ mb: 5 }}>
+            Enter your email and we&apos;ll send you instructions to reset your password
+          </Typography>
+
+          <Form noValidate autoComplete="off">
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              <TextField autoFocus fullWidth label="Email" />
+
+              <Button fullWidth variant="contained" type="submit">
                 Send reset link
               </Button>
-              <Typography className='flex justify-center items-center' color='primary'>
+
+              <Typography className='flex justify-center items-center' color='primary.main'>
                 <Link href='/login' className='flex items-center'>
                   <DirectionalIcon ltrIconClass='ri-arrow-left-s-line' rtlIconClass='ri-arrow-right-s-line' />
                   <span>Back to Login</span>
                 </Link>
               </Typography>
-            </Form>
-          </div>
+            </Box>
+          </Form>
         </CardContent>
       </Card>
+
       <Illustrations maskImg={{ src: authBackground }} />
-    </div>
+    </Box>
   )
 }
 

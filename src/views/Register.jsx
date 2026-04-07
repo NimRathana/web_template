@@ -17,6 +17,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
+import Box from '@mui/material/Box'
 
 // Component Imports
 import Illustrations from '@components/Illustrations'
@@ -38,78 +39,124 @@ const Register = ({ mode }) => {
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
   return (
-    <div className='flex flex-col justify-center items-center min-bs-[100dvh] relative p-6'>
-      <Card className='flex flex-col sm:is-[450px]'>
-        <CardContent className='p-6 sm:!p-12'>
-          <Link href='/' className='flex justify-center items-start mbe-6'>
-            <Logo />
-          </Link>
-          <Typography variant='h4'>Adventure starts here 🚀</Typography>
-          <div className='flex flex-col gap-5'>
-            <Typography className='mbs-1'>Make your app management easy and fun!</Typography>
-            <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()} className='flex flex-col gap-5'>
-              <TextField autoFocus fullWidth label='Username' />
-              <TextField fullWidth label='Email' />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100dvh',
+        position: 'relative',
+        p: 6,
+      }}
+    >
+      <Card sx={{ display: 'flex', flexDirection: 'column', width: { sm: 450 } }}>
+        <CardContent sx={{ p: { xs: 6, sm: 12 } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 6 }}>
+            <Link href='/'>
+              <Logo />
+            </Link>
+          </Box>
+
+          <Typography variant="h4" gutterBottom>
+            Adventure starts here 🚀
+          </Typography>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <Typography sx={{ mb: 1 }}>
+              Make your app management easy and fun!
+            </Typography>
+
+            <Box
+              component="form"
+              noValidate
+              autoComplete="off"
+              onSubmit={e => e.preventDefault()}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}
+            >
+              <TextField autoFocus fullWidth label="Username" />
+              <TextField fullWidth label="Email" />
               <TextField
                 fullWidth
-                label='Password'
+                label="Password"
                 type={isPasswordShown ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
-                        size='small'
-                        edge='end'
+                        size="small"
+                        edge="end"
                         onClick={handleClickShowPassword}
                         onMouseDown={e => e.preventDefault()}
                       >
                         <i className={isPasswordShown ? 'ri-eye-off-line' : 'ri-eye-line'} />
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
+
               <FormControlLabel
                 control={<Checkbox />}
                 label={
                   <>
                     <span>I agree to </span>
-                    <Link className='text-primary' href='/' onClick={e => e.preventDefault()}>
+                    <Box
+                      component="a"
+                      sx={{ color: 'primary.main', cursor: 'pointer' }}
+                    >
                       privacy policy & terms
-                    </Link>
+                    </Box>
                   </>
                 }
               />
-              <Button fullWidth variant='contained' type='submit'>
+
+              <Button fullWidth variant="contained" type="submit">
                 Sign Up
               </Button>
-              <div className='flex justify-center items-center flex-wrap gap-2'>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: 2,
+                }}
+              >
                 <Typography>Already have an account?</Typography>
-                <Typography component={Link} href='/login' color='primary'>
+                <Typography
+                  component={Link}
+                  href="/login"
+                  sx={{ color: 'primary.main', cursor: 'pointer', textDecoration: 'underline' }}
+                >
                   Sign in instead
                 </Typography>
-              </div>
-              <Divider className='gap-3'>Or</Divider>
-              <div className='flex justify-center items-center gap-2'>
-                <IconButton size='small' className='text-facebook'>
-                  <i className='ri-facebook-fill' />
+              </Box>
+
+              <Divider>or</Divider>
+
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+                <IconButton size="small" sx={{ color: '#4267B2' }}>
+                  <i className="ri-facebook-fill" />
                 </IconButton>
-                <IconButton size='small' className='text-twitter'>
-                  <i className='ri-twitter-fill' />
+                <IconButton size="small" sx={{ color: '#1DA1F2' }}>
+                  <i className="ri-twitter-fill" />
                 </IconButton>
-                <IconButton size='small' className='text-github'>
-                  <i className='ri-github-fill' />
+                <IconButton size="small">
+                  <i className="ri-github-fill" />
                 </IconButton>
-                <IconButton size='small' className='text-googlePlus'>
-                  <i className='ri-google-fill' />
+                <IconButton size="small" sx={{ color: '#DB4437' }}>
+                  <i className="ri-google-fill" />
                 </IconButton>
-              </div>
-            </form>
-          </div>
+              </Box>
+            </Box>
+          </Box>
         </CardContent>
       </Card>
+
       <Illustrations maskImg={{ src: authBackground }} />
-    </div>
+    </Box>
   )
 }
 

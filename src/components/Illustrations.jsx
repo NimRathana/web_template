@@ -42,6 +42,10 @@ const Illustrations = props => {
             className={image1?.className || 'absolute inline-start-0 block-end-0'}
             width={image1?.width}
             height={image1?.height || 200}
+            style={{
+              left: 0,
+              bottom: 0,
+            }}
           />
         ) : (
           image1
@@ -64,6 +68,10 @@ const Illustrations = props => {
             className={image2?.className || 'absolute inline-end-0 block-end-0'}
             width={image2?.width}
             height={image2?.height || 200}
+            style={{
+              right: 0,
+              bottom: 0,
+            }}
           />
         ) : (
           image2
