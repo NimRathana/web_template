@@ -10,7 +10,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: web_template   # 👈 IMPORTANT
+        working-directory: web_template
 
     steps:
       - name: Checkout repository
@@ -36,5 +36,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_PAT }}
-          publish_dir: web_template/out   # 👈 IMPORTANT
+          publish_dir: web_template/out
           publish_branch: develop
