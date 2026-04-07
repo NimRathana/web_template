@@ -3,6 +3,8 @@ import './globals.css'
 import { getSettingsFromCookie } from '@core/utils/serverHelpers'
 import 'remixicon/fonts/remixicon.css';
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: 'Rathana Template',
   description: 'Develop next-level web apps with Rathana Template - NextJS Admin Dashboard Template. Now, updated with lightning-fast routing powered by MUI and App router.'
