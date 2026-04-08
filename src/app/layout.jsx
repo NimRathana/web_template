@@ -1,6 +1,5 @@
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import './globals.css'
-import { getSettingsFromCookie } from '@core/utils/serverHelpers'
 import 'remixicon/fonts/remixicon.css';
 
 export const metadata = {
@@ -9,8 +8,7 @@ export const metadata = {
 }
 
 const RootLayout = async ({ children }) => {
-  const settingsCookie = await getSettingsFromCookie()
-  const direction = settingsCookie?.direction || 'ltr'
+  const direction = 'ltr'
   return (
     <html id='__next' dir={direction}>
       <body className='flex is-full min-bs-full flex-auto flex-col'>{children}</body>
