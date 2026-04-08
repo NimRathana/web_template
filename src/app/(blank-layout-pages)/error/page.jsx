@@ -2,13 +2,13 @@
 import NotFound from '@views/NotFound'
 
 // Server Action Imports
-import { getServerMode } from '@core/utils/serverHelpers'
+// import { getServerMode } from '@core/utils/serverHelpers'
 
 const Error = async () => {
   // Vars
-  const mode = await getServerMode()
+  // const mode = await getServerMode()
 
-  return <NotFound mode={mode} />
+  return <NotFound mode={'light'} />
 }
 
 export default Error
