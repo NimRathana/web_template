@@ -31,9 +31,9 @@ export const getSettingsFromCookie = async () => {
 
 // ✅ Get mode
 export const getMode = async () => {
-  // const settingsCookie = await getSettingsFromCookie()
+  const settingsCookie = await getSettingsFromCookie()
 
-  return themeConfig.mode
+  return settingsCookie.mode || themeConfig.mode
 }
 
 // ✅ System mode (same for now, but ready for extension)
