@@ -13,10 +13,17 @@ import TranslateDropdown from '@components/layout/shared/TranslateDropdown'
 
 // Util Imports
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
+import themeConfig from '@configs/themeConfig'
 
-const NavbarContent = () => {
+const NavbarContent = ({ scrolled, isHorizontal }) => {
   return (
-    <div className={classnames(verticalLayoutClasses.navbarContent, 'flex items-center justify-between gap-4 is-full bg-red-500')}>
+    <div 
+      style={{
+        paddingInline: isHorizontal ? `${themeConfig.layoutPadding}px` : scrolled ? `${themeConfig.layoutPadding}px` : '0',
+        transition: 'padding 0.3s ease',
+      }}
+      className={classnames(verticalLayoutClasses.navbarContent, 'flex items-center justify-between gap-4 is-full bg-red-500')}
+    >
       <div className='flex items-center gap-2 sm:gap-4'>
         <NavToggle />
         <NavSearch />

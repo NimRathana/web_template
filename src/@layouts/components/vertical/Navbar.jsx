@@ -36,6 +36,7 @@ const Navbar = props => {
       isBlur={hasBlur}
       scrolled={scrolled}
       isFixed={isFixed}
+      isHorizontal={settings.layout == 'horizontal'}
       className={classnames(
         verticalLayoutClasses.header,
         isContentCompact ? verticalLayoutClasses.headerContentCompact : verticalLayoutClasses.headerContentWide,
@@ -51,7 +52,7 @@ const Navbar = props => {
         transition: 'all 0.3s ease',
       }}
     >
-      <div className={classnames(verticalLayoutClasses.navbar, 'flex bs-full')}>{children}</div>
+      <div className={classnames(verticalLayoutClasses.navbar, 'flex flex-col bs-full')}>{children}</div>
     </StyledHeader>
   )
 }

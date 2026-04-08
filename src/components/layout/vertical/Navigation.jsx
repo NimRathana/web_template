@@ -75,7 +75,7 @@ const Navigation = () => {
       customStyles={navigationCustomStyles(theme, settings.skin, effectiveCollapsed)}
       onMouseEnter={() => setHovered(isCollapsed)}
       onMouseLeave={() => setHovered(false)}
-      >
+    >
       {/* Nav Header including Logo & nav toggle icons  */}
       <NavHeader isCollapsed={effectiveCollapsed}>
         <Link href='/'>
