@@ -1,8 +1,8 @@
 // Components Imports
-import AllComponentMui from '@views/dashboard'
+import AllComponent from '@views/dashboard'
 
 const Dashboard = () => {
-  return <AllComponentMui />
+  return <AllComponent />
 }
 
 export default Dashboard
