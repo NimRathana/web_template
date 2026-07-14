@@ -2,14 +2,10 @@ import Chip from '@mui/material/Chip'
 
 export const MenuData = [
   {
-    type: 'submenu',
-    label: 'Dashboards',
+    type: 'item',
+    label: 'Dashboard',
     icon: <i className='ri-home-smile-line' />,
-    suffix: <Chip label='2' size='small' color='error' />,
-    children: [
-      { type: 'item', label: 'CRM', href: '/account-settings' },
-      { type: 'item', label: 'Analytics', href: '/' }
-    ]
+    href: '/'
   },
   {
     type: 'section',
