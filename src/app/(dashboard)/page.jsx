@@ -1,8 +1,8 @@
 // Components Imports
 import AllComponentMui from '@views/dashboard'
 
-const DashboardAnalytics = () => {
+const Dashboard = () => {
   return <AllComponentMui />
 }
 
-export default DashboardAnalytics
+export default Dashboard
