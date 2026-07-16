@@ -26,20 +26,20 @@ import MenuButton, { menuButtonStyles } from "./MenuButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 // Hook Imports
-import useVerticalNav from "../../hooks/useVerticalNav";
-import useVerticalMenu from "../../hooks/useVerticalMenu";
+import useVerticalNav from "../hooks/useVerticalNav";
+import useVerticalMenu from "../hooks/useVerticalMenu";
 
 // Util Imports
-import { menuClasses } from "../../utils/menuClasses";
-import { confirmUrlInChildren, renderMenuIcon } from "../../utils/menuUtils";
+import { menuClasses } from "../utils/menuClasses";
+import { confirmUrlInChildren, renderMenuIcon } from "../utils/menuUtils";
 
 // Styled Component Imports
-import StyledMenuLabel from "../../styles/StyledMenuLabel";
-import StyledMenuPrefix from "../../styles/StyledMenuPrefix";
-import StyledMenuSuffix from "../../styles/StyledMenuSuffix";
+import StyledMenuLabel from "../styles/StyledMenuLabel";
+import StyledMenuPrefix from "../styles/StyledMenuPrefix";
+import StyledMenuSuffix from "../styles/StyledMenuSuffix";
 import StyledVerticalNavExpandIcon, {
   StyledVerticalNavExpandIconWrapper,
-} from "../../styles/vertical/StyledVerticalNavExpandIcon";
+} from "./styles/StyledVerticalNavExpandIcon";
 
 const StyledSubMenu = styled.li`
   position: relative;
@@ -177,8 +177,7 @@ const SubMenu = (props, ref) => {
       setActive(true);
 
       if (
-        openSubmenusRef?.current.findIndex((submenu) => submenu.id === id) ===
-        -1
+        openSubmenusRef?.current.findIndex((submenu) => submenu.id === id) === -1
       ) {
         openSubmenusRef?.current.push({ level, label, active: true, id });
       }

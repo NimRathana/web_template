@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 
 // Context Imports
-import { VerticalMenuContext } from '../components/vertical-menu/Menu'
+import { VerticalMenuContext } from '../vertical/Menu'
 
 const useVerticalMenu = () => {
   // Hooks

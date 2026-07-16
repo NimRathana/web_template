@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
   justify-content: center;
   inline-size: 100%;
   flex-shrink: 0;
-  min-block-size: var(--header-height);
+  min-block-size: ${({ isHorizontal }) => (isHorizontal ? `calc(var(--header-height) + 56px)` : 'var(--header-height)')};
   padding-inline: ${({ scrolled }) => scrolled ? `${themeConfig.layoutPadding}px` : `${themeConfig.layoutPadding}px`};
   max-inline-size: ${({ isContentCompact }) => isContentCompact ? `${themeConfig.compactContentWidth}px` : '100%'};
   margin-inline: auto;

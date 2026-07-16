@@ -4,7 +4,7 @@
 import { useRef, useEffect, useState } from 'react'
 import Link from '@/components/Link'
 import { styled, useTheme } from '@mui/material/styles'
-import VerticalNav, { NavHeader } from '@menu/vertical-menu'
+import VerticalNav, { NavHeader } from '@menu/vertical'
 import VerticalMenu from './VerticalMenu'
 import Logo from '@components/layout/shared/Logo'
 import useVerticalNav from '@menu/hooks/useVerticalNav'

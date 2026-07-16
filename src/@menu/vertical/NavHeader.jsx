@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 
 // Util Imports
-import { verticalNavClasses } from '../../utils/menuClasses'
+import { verticalNavClasses } from '../utils/menuClasses'
 
 const StyledNavHeader = styled.div`
   display: flex;

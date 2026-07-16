@@ -14,18 +14,18 @@ import { useUpdateEffect } from 'react-use'
 import MenuButton from './MenuButton'
 
 // Hook Imports
-import useVerticalNav from '../../hooks/useVerticalNav'
-import useVerticalMenu from '../../hooks/useVerticalMenu'
+import useVerticalNav from '../hooks/useVerticalNav'
+import useVerticalMenu from '../hooks/useVerticalMenu'
 
 // Util Imports
-import { renderMenuIcon } from '../../utils/menuUtils'
-import { menuClasses } from '../../utils/menuClasses'
+import { renderMenuIcon } from '../utils/menuUtils'
+import { menuClasses } from '../utils/menuClasses'
 
 // Styled Component Imports
-import StyledMenuLabel from '../../styles/StyledMenuLabel'
-import StyledMenuPrefix from '../../styles/StyledMenuPrefix'
-import StyledMenuSuffix from '../../styles/StyledMenuSuffix'
-import StyledVerticalMenuItem from '../../styles/vertical/StyledVerticalMenuItem'
+import StyledMenuLabel from '../styles/StyledMenuLabel'
+import StyledMenuPrefix from '../styles/StyledMenuPrefix'
+import StyledMenuSuffix from '../styles/StyledMenuSuffix'
+import StyledVerticalMenuItem from './styles/StyledVerticalMenuItem'
 
 const MenuItem = (props, ref) => {
   // Props

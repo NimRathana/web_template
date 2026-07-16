@@ -5,10 +5,10 @@ import { forwardRef } from 'react'
 import { css } from '@emotion/react'
 
 // Component Imports
-import { RouterLink } from '../RouterLink'
+import { RouterLink } from '../components/RouterLink'
 
 // Util Imports
-import { menuClasses } from '../../utils/menuClasses'
+import { menuClasses } from '../utils/menuClasses'
 
 export const menuButtonStyles = props => {
   // Props

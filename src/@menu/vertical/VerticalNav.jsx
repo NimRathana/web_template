@@ -7,20 +7,20 @@ import { useEffect } from 'react'
 import classnames from 'classnames'
 
 // Hook Imports
-import useMediaQuery from '../../hooks/useMediaQuery'
-import useVerticalNav from '../../hooks/useVerticalNav'
+import useMediaQuery from '../hooks/useMediaQuery'
+import useVerticalNav from '../hooks/useVerticalNav'
 
 // Util Imports
-import { verticalNavClasses } from '../../utils/menuClasses'
+import { verticalNavClasses } from '../utils/menuClasses'
 
 // Styled Component Imports
-import StyledBackdrop from '../../styles/StyledBackdrop'
-import StyledVerticalNav from '../../styles/vertical/StyledVerticalNav'
-import StyledVerticalNavContainer from '../../styles/vertical/StyledVerticalNavContainer'
-import StyledVerticalNavBgColorContainer from '../../styles/vertical/StyledVerticalNavBgColorContainer'
+import StyledBackdrop from '../styles/StyledBackdrop'
+import StyledVerticalNav from './styles/StyledVerticalNav'
+import StyledVerticalNavContainer from './styles/StyledVerticalNavContainer'
+import StyledVerticalNavBgColorContainer from './styles/StyledVerticalNavBgColorContainer'
 
 // Default Config Imports
-import { defaultBreakpoints, verticalNavToggleDuration } from '../../defaultConfigs'
+import { defaultBreakpoints, verticalNavToggleDuration } from '../defaultConfigs'
 
 const VerticalNav = props => {
   // Props

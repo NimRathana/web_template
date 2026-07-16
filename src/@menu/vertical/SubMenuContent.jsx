@@ -2,10 +2,10 @@
 import { forwardRef, useEffect, useState } from 'react'
 
 // Styled Component Imports
-import StyledSubMenuContent from '../../styles/StyledSubMenuContent'
+import StyledSubMenuContent from '../styles/StyledSubMenuContent'
 
 // Style Imports
-import styles from '../../styles/styles.module.css'
+import styles from '../styles/styles.module.css'
 
 const SubMenuContent = (props, ref) => {
   // Props

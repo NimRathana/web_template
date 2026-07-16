@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { menuClasses } from '../../utils/menuClasses'
 
 // Style Imports
-import { menuButtonStyles } from '../../components/vertical-menu/MenuButton'
+import { menuButtonStyles } from '../../vertical/MenuButton'
 
 const StyledVerticalMenuItem = styled.li`
   position: relative;

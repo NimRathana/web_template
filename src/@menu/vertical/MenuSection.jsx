@@ -7,17 +7,17 @@ import { forwardRef } from 'react'
 import classnames from 'classnames'
 
 // Hook Imports
-import useVerticalMenu from '../../hooks/useVerticalMenu'
+import useVerticalMenu from '../hooks/useVerticalMenu'
 
 // Util Imports
-import { menuClasses } from '../../utils/menuClasses'
+import { menuClasses } from '../utils/menuClasses'
 
 // Styled Component Imports
-import StyledMenuIcon from '../../styles/StyledMenuIcon'
-import StyledMenuPrefix from '../../styles/StyledMenuPrefix'
-import StyledMenuSuffix from '../../styles/StyledMenuSuffix'
-import StyledMenuSectionLabel from '../../styles/StyledMenuSectionLabel'
-import StyledVerticalMenuSection from '../../styles/vertical/StyledVerticalMenuSection'
+import StyledMenuIcon from '../styles/StyledMenuIcon'
+import StyledMenuPrefix from '../styles/StyledMenuPrefix'
+import StyledMenuSuffix from '../styles/StyledMenuSuffix'
+import StyledMenuSectionLabel from '../styles/StyledMenuSectionLabel'
+import StyledVerticalMenuSection from '../vertical/styles/StyledVerticalMenuSection'
 
 const menuSectionWrapperStyles = {
   display: 'inline-block',

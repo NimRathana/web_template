@@ -10,16 +10,16 @@ import { usePathname } from 'next/navigation'
 import classnames from 'classnames'
 
 // Util Imports
-import { menuClasses } from '../../utils/menuClasses'
+import { menuClasses } from '../utils/menuClasses'
 
 // Styled Component Imports
-import StyledVerticalMenu from '../../styles/vertical/StyledVerticalMenu'
+import StyledVerticalMenu from '../vertical/styles/StyledVerticalMenu'
 
 // Style Imports
-import styles from '../../styles/styles.module.css'
+import styles from '../styles/styles.module.css'
 
 // Default Config Imports
-import { verticalSubMenuToggleDuration } from '../../defaultConfigs'
+import { verticalSubMenuToggleDuration } from '../defaultConfigs'
 
 export const VerticalMenuContext = createContext({})
 
