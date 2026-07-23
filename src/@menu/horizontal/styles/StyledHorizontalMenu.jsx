@@ -1,18 +1,14 @@
-// Third-party Imports
 import styled from '@emotion/styled'
-
-// Util Imports
 import { menuClasses } from '../../utils/menuClasses'
 
 const StyledHorizontalMenu = styled.nav`
-  display: block;
+  display: flex;
+  align-items: center;
+
   & > ul {
     display: flex;
-    gap: 0.5rem;
     align-items: center;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: 6px;
   }
 
   &.${menuClasses.root} {

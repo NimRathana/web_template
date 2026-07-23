@@ -1,7 +1,7 @@
 'use client'
 
 // Component Imports
-import LayoutNavbar from '@layouts/components/vertical/Navbar'
+import LayoutNavbar from '@layouts/components/horizontal/Navbar'
 import NavbarContent from './NavbarContent'
 import { useState, useEffect } from 'react'
 import { useSettings } from '@core/hooks/useSettings'

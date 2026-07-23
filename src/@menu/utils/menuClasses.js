@@ -29,3 +29,9 @@ export const verticalNavClasses = {
   toggled: 'ts-toggled',
   breakpointReached: 'ts-breakpoint-reached'
 }
+
+export const horizontalNavClasses = {
+  root: 'ts-horizontal-nav-root',
+  scrollWithContent: 'ts-scroll-with-content',
+  breakpointReached: 'ts-breakpoint-reached'
+}

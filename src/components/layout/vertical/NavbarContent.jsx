@@ -22,7 +22,7 @@ const NavbarContent = ({ scrolled, isHorizontal }) => {
         paddingInline: isHorizontal ? `${themeConfig.layoutPadding}px` : scrolled ? `${themeConfig.layoutPadding}px` : '0',
         transition: 'padding 0.3s ease',
       }}
-      className={classnames(verticalLayoutClasses.navbarContent, 'flex items-center justify-between gap-4 is-full bg-red-500')}
+      className={classnames(verticalLayoutClasses.navbarContent, 'flex items-center justify-between gap-4 is-full px-4 sm:px-6')}
     >
       <div className='flex items-center gap-2 sm:gap-4'>
         <NavToggle />

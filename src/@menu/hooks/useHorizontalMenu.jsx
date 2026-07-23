@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 
 // Context Imports
-import HorizontalMenuContext from '../horizontal/Menu'
+import { HorizontalMenuContext } from '../horizontal/Menu'
 
 const useHorizontalMenu = () => {
   const context = useContext(HorizontalMenuContext)

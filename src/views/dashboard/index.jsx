@@ -87,7 +87,7 @@ import { useSettings } from '@core/hooks/useSettings';
 import { useTranslation } from 'react-i18next';
 import useVerticalNav from '@menu/hooks/useVerticalNav'
 
-const MaterioStyleDemo = () => {
+const StyleDemo = () => {
   const [tabValue, setTabValue] = React.useState(0);
   const [slider, setSlider] = React.useState(65);
   const [rating, setRating] = React.useState(4.5);
@@ -398,4 +398,4 @@ const MaterioStyleDemo = () => {
   );
 };
 
-export default MaterioStyleDemo;
+export default StyleDemo;

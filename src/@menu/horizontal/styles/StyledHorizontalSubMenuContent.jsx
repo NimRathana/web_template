@@ -5,18 +5,16 @@ const StyledHorizontalSubMenuContent = styled.div`
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  min-width: 12rem;
-  background: var(--menu-bg, #fff);
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
-  padding: 0.5rem 0;
+  /* min-width: 13rem; */
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
   z-index: 9999;
   display: ${({ open }) => (open ? 'block' : 'none')};
 
   ul.horizontal-submenu-ul {
     list-style: none;
     margin: 0;
-    padding: 0.25rem 0;
+    /* padding: 0.2rem 0; */
   }
 
   ul.horizontal-submenu-ul > li {
@@ -25,3 +23,5 @@ const StyledHorizontalSubMenuContent = styled.div`
 
   ${({ rootStyles }) => rootStyles}
 `
+
+export default StyledHorizontalSubMenuContent

@@ -1,4 +1,5 @@
 import { VerticalNavProvider } from '@menu/contexts/verticalNavContext'
+import { HorizontalNavProvider } from '@menu/contexts/horizontalNavContext'
 import { SettingsProvider } from '@core/contexts/settingsContext'
 import CustomThemeProvider from './theme'
 import { getMode, getSettingsFromCookie } from '@core/utils/serverHelpers'
@@ -21,15 +22,17 @@ const Providers = async props => {
   }
 
   return (
-    <VerticalNavProvider>
-      <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
-        <AppRouterCacheProvider CacheProvider={ClientCacheProvider} options={cacheOptions}>
-          <CustomThemeProvider>
-            {children}
-          </CustomThemeProvider>
-        </AppRouterCacheProvider>
-      </SettingsProvider>
-    </VerticalNavProvider>
+    <SettingsProvider settingsCookie={settingsCookie} mode={mode}>
+      <VerticalNavProvider>
+        <HorizontalNavProvider>
+          <AppRouterCacheProvider CacheProvider={ClientCacheProvider} options={cacheOptions}>
+            <CustomThemeProvider>
+              {children}
+            </CustomThemeProvider>
+          </AppRouterCacheProvider>
+        </HorizontalNavProvider>
+      </VerticalNavProvider>
+    </SettingsProvider>
   )
 }
 

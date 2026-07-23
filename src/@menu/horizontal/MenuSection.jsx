@@ -7,12 +7,12 @@ import { menuClasses } from '../utils/menuClasses'
 
 const MenuSection = ({ children, label, className, rootStyles, ...rest }) => {
   return (
-    <li className={classnames(menuClasses.menuSectionRoot, className)}>
+    <div className={classnames(menuClasses.menuSectionRoot, className)}>
       <StyledHorizontalMenuSection rootStyles={rootStyles} className={menuClasses.menuSection} {...rest}>
         {label && <div className={menuClasses.menuSectionLabel}>{label}</div>}
         <div className={menuClasses.menuSectionContent}>{children}</div>
       </StyledHorizontalMenuSection>
-    </li>
+    </div>
   )
 }
 

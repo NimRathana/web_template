@@ -64,7 +64,7 @@ export const MenuData = [
             type: 'submenu',
             label: 'Menu Levels',
             children: [
-              { type: 'item', label: 'Menu Level 2' },
+              { type: 'item', label: 'Menu Level 2', href: '/card-basic' },
               {
                 type: 'submenu',
                 label: 'Menu Level 2',
