@@ -2,7 +2,7 @@
 
 // MUI Imports
 import { useTheme } from "@mui/material/styles";
-import { Box, Drawer } from "@mui/material";
+import { Drawer } from "@mui/material";
 
 // Horizontal Menu Imports
 import { Menu, MenuItem, SubMenu } from "@menu/horizontal";
