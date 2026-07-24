@@ -58,9 +58,12 @@ const SubMenu = (props, ref) => {
   // States
   const [active, setActive] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [isContentHovered, setIsContentHovered] = useState(false)
 
   // Refs
   const contentRef = useRef(null)
+  const buttonRef = useRef(null)
+  const hoverTimeoutRef = useRef(null)
 
   // Hooks
   const id = useId()
@@ -80,8 +83,8 @@ const SubMenu = (props, ref) => {
 
   // Vars
   const childNodes = Children.toArray(children).filter(Boolean)
-  const isSubMenuOpen = trigger === 'hover' 
-    ? isHovered 
+  const isSubMenuOpen = trigger === 'hover'
+    ? isHovered || isContentHovered
     : (openSubmenu?.some((item) => item.id === id) ?? false)
 
   const handleToggle = () => {
@@ -90,17 +93,66 @@ const SubMenu = (props, ref) => {
     onOpenChange?.(!isSubMenuOpen)
   }
 
+  const clearHoverTimeout = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+      hoverTimeoutRef.current = null
+    }
+  }
+
+  const closeSubMenu = () => {
+    setIsHovered(false)
+    setIsContentHovered(false)
+    onOpenChange?.(false)
+  }
+
+  const scheduleClose = () => {
+    if (disabled || trigger !== 'hover') return
+
+    clearHoverTimeout()
+    hoverTimeoutRef.current = setTimeout(() => {
+      closeSubMenu()
+      hoverTimeoutRef.current = null
+    }, 160)
+  }
+
   const handleMouseEnter = () => {
     if (disabled || trigger !== 'hover') return
+
+    clearHoverTimeout()
     setIsHovered(true)
     onOpenChange?.(true)
   }
 
   const handleMouseLeave = () => {
     if (disabled || trigger !== 'hover') return
-    setIsHovered(false)
-    onOpenChange?.(false)
+
+    scheduleClose()
   }
+
+  const handleContentMouseEnter = () => {
+    if (disabled || trigger !== 'hover') return
+
+    clearHoverTimeout()
+    setIsContentHovered(true)
+    onOpenChange?.(true)
+  }
+
+  const handleContentMouseLeave = () => {
+    if (disabled || trigger !== 'hover') return
+
+    setIsContentHovered(false)
+    scheduleClose()
+  }
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
+      }
+    }
+  }, [])
 
   const getSubMenuItemStyles = (element) => {
     if (menuItemStyles) {
@@ -164,6 +216,8 @@ const SubMenu = (props, ref) => {
         tabIndex={disabled ? -1 : 0}
         level={level}
         disabled={disabled}
+        buttonStyles={getSubMenuItemStyles('button')}
+        ref={buttonRef}
         {...rest}
       >
         {/* Render Icon */}
@@ -231,13 +285,15 @@ const SubMenu = (props, ref) => {
       {/* Dropdown Content */}
       <SubMenuContent
         ref={contentRef}
+        anchorRef={buttonRef}
         open={isSubMenuOpen}
         level={level}
         transitionDuration={transitionDuration}
+        rootStyles={getSubMenuItemStyles('subMenuContent')}
+        onMouseEnter={handleContentMouseEnter}
+        onMouseLeave={handleContentMouseLeave}
       >
-        {childNodes.map((node) =>
-          cloneElement(node, { level: level + 1 })
-        )}
+        { childNodes.map((node) => cloneElement(node, { level: level + 1 })) }
       </SubMenuContent>
     </StyledHorizontalSubMenu>
   )
