@@ -18,7 +18,6 @@ import { MenuData } from "@data/navigation/MenuData";
 
 // Styles
 import menuItemStyles from "@core/styles/horizontal/menuItemStyles";
-import menuSectionStyles from "@core/styles/horizontal/menuSectionStyles";
 import StyledVerticalNavExpandIcon from '@menu/vertical/styles/StyledVerticalNavExpandIcon'
 
 const RenderExpandIcon = ({ open, transitionDuration }) => (
@@ -120,7 +119,6 @@ const HorizontalMenu = () => {
             alignItems: 'center',
           }}
           menuItemStyles={menuItemStyles(theme, settings?.primaryColor, settings?.skin)}
-          menuSectionStyles={menuSectionStyles(theme)}
           renderExpandIcon={RenderExpandIcon}
           subMenuOpenBehavior="hover"
         >
