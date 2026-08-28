@@ -24,7 +24,7 @@ const themeConfig = {
   homePageUrl: '/dashboards',
   skin: 'default',
   semiDark: false,
-  layout: 'vertical',
+  layout: 'horizontal', // vertical, horizontal
   navbar: {
     type: 'fixed',
     contentWidth: 'compact',
